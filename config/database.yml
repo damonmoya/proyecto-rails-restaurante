@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost #127.17.0.1
+  username: postgres
+  password: password
+  pool: 5
+
+development:
+  <<: *default
+  database: proyecto-rails-restaurante_development
+
+
+test:
+  <<: *default
+  database: proyecto-rails-restaurante_test
