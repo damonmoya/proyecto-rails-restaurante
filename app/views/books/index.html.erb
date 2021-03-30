@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Reservas</h1>
+
+<% if @books.exists? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Fecha y hora</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= book.email %></td>
+          <td><%= book.start_time %></td>
+          <td><%= link_to 'Detalles', book %></td>
+          <td><%= link_to 'Editar', edit_book_path(book) %></td>
+          <td><%= link_to 'Eliminar', book, method: :delete, data: { confirm: '¿Eliminar reserva?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div>¡No hay reservas!</div>
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to 'Nueva reserva', new_book_path %>
+</div>
+
+<br>
+
+<div>
+  <%= link_to 'Volver a la Página Principal', root_path %>
+</div>
+

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @book.email %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @book.start_time %>
+</p>
+
+<%= link_to 'Editar', edit_book_path(@book) %> |
+<%= link_to 'Volver a sección de reservas', books_path %>
