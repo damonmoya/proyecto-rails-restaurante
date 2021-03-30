@@ -17,11 +17,11 @@ RSpec.describe "/books", type: :request do
   # Book. As you add validations to Book, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {email: "prueba@gmail.com", start_time: "2021-05-30 14:32:00 UTC"}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {email: nil, start_time: nil}
   }
 
   describe "GET /index" do
@@ -78,6 +78,7 @@ RSpec.describe "/books", type: :request do
 
       it "renders a successful response (i.e. to display the 'new' template)" do
         post books_url, params: { book: invalid_attributes }
+        get new_book_url
         expect(response).to be_successful
       end
     end
@@ -86,14 +87,14 @@ RSpec.describe "/books", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {email: "prueba2@gmail.com", start_time: "2021-07-30 14:32:00 UTC"}
       }
 
       it "updates the requested book" do
         book = Book.create! valid_attributes
         patch book_url(book), params: { book: new_attributes }
         book.reload
-        skip("Add assertions for updated state")
+        expect(response).to redirect_to(book_url(book))
       end
 
       it "redirects to the book" do
@@ -108,6 +109,7 @@ RSpec.describe "/books", type: :request do
       it "renders a successful response (i.e. to display the 'edit' template)" do
         book = Book.create! valid_attributes
         patch book_url(book), params: { book: invalid_attributes }
+        get edit_book_url
         expect(response).to be_successful
       end
     end
