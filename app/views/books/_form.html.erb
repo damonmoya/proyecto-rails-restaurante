@@ -23,6 +23,11 @@
     <%= form.datetime_select :start_time %>
   </div>
 
+  <div class="field">
+    <%= form.label :people, 'Comensales' %>
+    <%= form.number_field :people %>
+  </div>
+
   <div class="actions">
     <%= form.submit button_name %>
   </div>

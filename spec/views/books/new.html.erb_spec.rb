@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe "books/new", type: :view do
   before(:each) do
     assign(:book, Book.new(
-      email: "MyString"
+      email: "email1@hotmail.com",
+      start_time: "2021-04-22 14:32:00 UTC",
+      people: 1
     ))
   end
 
@@ -13,6 +15,8 @@ RSpec.describe "books/new", type: :view do
     assert_select "form[action=?][method=?]", books_path, "post" do
 
       assert_select "input[name=?]", "book[email]"
+      assert_select "select", 5
+      assert_select "input[name=?]", "book[people]"
     end
   end
 end

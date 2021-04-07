@@ -1,16 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Detalle de reserva <%= @book.id %></h1>
-
 <p>
   <strong>Email:</strong>
   <%= @book.email %>
 </p>
 
 <p>
-  <strong>Start time:</strong>
+  <strong>Fecha y Hora:</strong>
   <%= @book.start_time %>
 </p>
 
-<%= link_to 'Editar', edit_book_path(@book) %> |
+<p>
+  <strong>Comensales:</strong>
+  <%= @book.people %>
+</p>
+
+<%= link_to 'Editar reserva', edit_book_path(@book) %> |
 <%= link_to 'Volver a sección de reservas', books_path %>
