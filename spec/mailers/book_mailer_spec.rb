@@ -5,7 +5,8 @@ RSpec.describe BookMailer, type: :mailer do
     let(:book) { Book.create!(
       email: "prueba1@gmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
-      people: 1
+      diners: 1,
+      is_confirmed: false
     ) }
     let(:mail) { BookMailer.with(book: book).book_confirmation }
 

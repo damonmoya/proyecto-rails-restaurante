@@ -5,7 +5,8 @@ RSpec.describe "books/edit", type: :view do
     @book = assign(:book, Book.create!(
       email: "email1@hotmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
-      people: 1
+      diners: 1,
+      is_confirmed: false
     ))
   end
 
@@ -16,7 +17,8 @@ RSpec.describe "books/edit", type: :view do
 
       assert_select "input[name=?]", "book[email]"
       assert_select "select", 5
-      assert_select "input[name=?]", "book[people]"
+      assert_select "input[name=?]", "book[diners]"
+      assert_select "input[name=?]", "book[is_confirmed]"
     end
   end
 end

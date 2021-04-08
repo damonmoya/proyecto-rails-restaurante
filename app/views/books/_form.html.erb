@@ -1,7 +1,7 @@
 <%= form_with(model: book, local: true) do |form| %>
   <% if book.errors.any? %>
     <div id="error_explanation">
-      <h2>No se ha podido realizar la reserva</h2>
+    <h2>No se ha podido realizar la reserva</h2>
 
       <ul>
         <% book.errors.messages.values.each do |message| %>
@@ -24,9 +24,22 @@
   </div>
 
   <div class="field">
-    <%= form.label :people, 'Comensales' %>
-    <%= form.number_field :people %>
+    <%= form.label :diners, 'Comensales' %>
+    <%= form.number_field :diners %>
   </div>
+
+  <% if form_type === "create" %>
+    <%= form.hidden_field :is_confirmed, value: false %>
+  <% elsif form_type === "edit" %>
+    <% if book.is_confirmed %>
+      <%= form.hidden_field :is_confirmed, value: true %>
+    <% else %>
+      <div class="field">
+        <%= form.label :is_confirmed, '¿Reserva confirmada?' %>
+        <%= form.check_box :is_confirmed %>
+      </div>
+    <% end %>
+  <% end %>
 
   <div class="actions">
     <%= form.submit button_name %>

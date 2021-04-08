@@ -1,3 +1,5 @@
+<h1>Detalles de reserva <%= @book.id %></h1>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -12,7 +14,18 @@
 
 <p>
   <strong>Comensales:</strong>
-  <%= @book.people %>
+  <%= @book.diners %>
+</p>
+
+<p>
+  <strong>Confirmación:</strong>
+  <strong>
+    <% if @book.is_confirmed %>
+      &#10004
+    <% else %>
+      &#10006
+    <% end %>
+  </strong>
 </p>
 
 <%= link_to 'Editar reserva', edit_book_path(@book) %> |

@@ -17,11 +17,11 @@ RSpec.describe "/books", type: :request do
   # Book. As you add validations to Book, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {email: "prueba@gmail.com", start_time: "2021-05-30 14:32:00 UTC", people: 1}
+    {email: "prueba@gmail.com", start_time: "2021-05-30 14:32:00 UTC", diners: 1, is_confirmed: false}
   }
 
   let(:invalid_attributes) {
-    {email: nil, start_time: nil, people: 1}
+    {email: nil, start_time: nil, diners: 0, is_confirmed: false}
   }
 
   describe "GET /index" do
@@ -87,7 +87,7 @@ RSpec.describe "/books", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        {email: "prueba2@gmail.com", start_time: "2021-07-30 14:32:00 UTC", people: 1}
+        {email: "prueba2@gmail.com", start_time: "2021-07-30 14:32:00 UTC", diners: 1, is_confirmed: false}
       }
 
       it "updates the requested book" do

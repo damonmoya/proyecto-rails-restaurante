@@ -1,6 +1,6 @@
 <h1>Editar reserva <%= @book.id %></h1>
 
-<%= render 'form', book: @book, button_name: "Actualizar" %>
+<%= render 'form', book: @book, button_name: "Actualizar", form_type: "edit" %>
 
 <%= link_to 'Detalles', @book %> |
 <%= link_to 'Volver a sección de reservas', books_path %>

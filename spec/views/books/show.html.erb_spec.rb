@@ -5,7 +5,8 @@ RSpec.describe "books/show", type: :view do
     @book = assign(:book, Book.create!(
       email: "email1@hotmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
-      people: 2
+      diners: 2,
+      is_confirmed: false
     ))
   end
 
@@ -13,5 +14,6 @@ RSpec.describe "books/show", type: :view do
     render
     expect(rendered).to match(/email1@hotmail.com/)
     expect(rendered).to match(/2/)
+    #expect(rendered).to match(/false/)
   end
 end

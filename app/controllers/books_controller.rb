@@ -3,7 +3,8 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-    @books = Book.all
+    @pending_books = Book.where.not(is_confirmed: true)
+    @confirmed_books = Book.where(is_confirmed: true)
   end
 
   # GET /books/1 or /books/1.json
@@ -25,7 +26,8 @@ class BooksController < ApplicationController
 
     respond_to do |format|
       if @book.save
-        BookMailer.with(book: @book).book_confirmation.deliver_now
+        BookMailer.with(book: @book).book_pending_customer.deliver_now
+        BookMailer.with(book: @book).book_pending_admin.deliver_now
         format.html { redirect_to @book, notice: "Reserva realizada." }
         format.json { render :show, status: :created, location: @book }
       else
@@ -37,6 +39,11 @@ class BooksController < ApplicationController
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
+
+    if book_params[:is_confirmed]
+      BookMailer.with(book: @book).book_confirmation.deliver_now
+    end
+
     respond_to do |format|
       if @book.update(book_params)
         format.html { redirect_to @book, notice: "Reserva actualizada." }
@@ -65,6 +72,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:email, :start_time, :people)
+      params.require(:book).permit(:email, :start_time, :diners, :is_confirmed)
     end
 end

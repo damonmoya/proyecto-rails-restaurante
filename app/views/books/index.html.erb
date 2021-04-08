@@ -2,7 +2,9 @@
 
 <h1>Reservas</h1>
 
-<% if @books.count >= 1 %>
+<h2>Reservas pendientes</h2>
+
+<% if @pending_books.count >= 1 %>
   <table>
     <thead>
       <tr>
@@ -13,11 +15,11 @@
       </tr>
     </thead>
     <tbody>
-      <% @books.each do |book| %>
+      <% @pending_books.each do |book| %>
         <tr>
           <td><%= book.email %></td>
           <td><%= book.start_time %></td>
-          <td><%= book.people %></td>
+          <td><%= book.diners %></td>
           <td><%= link_to 'Detalles', book %></td>
           <td><%= link_to 'Editar', edit_book_path(book) %></td>
           <td><%= link_to 'Eliminar', book, method: :delete, data: { confirm: '¿Eliminar reserva?' } %></td>
@@ -26,10 +28,36 @@
     </tbody>
   </table>
 <% else %>
-  <div>¡No hay reservas!</div>
+  <div>¡No hay reservas pendientes!</div>
 <% end %>
 
-<br>
+<% if @confirmed_books.count >= 1 %>
+  <h2>Reservas confirmadas</h2>
 
-<%= link_to 'Nueva reserva', new_book_path %> | 
-<%= link_to 'Volver a la Página Principal', root_path %>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Fecha y hora</th>
+        <th>Comensales</th>
+        <th colspan="2">Operaciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @confirmed_books.each do |book| %>
+        <tr>
+          <td><%= book.email %></td>
+          <td><%= book.start_time %></td>
+          <td><%= book.diners %></td>
+          <td><%= link_to 'Detalles', book %></td>
+          <td><%= link_to 'Eliminar', book, method: :delete, data: { confirm: '¿Eliminar reserva?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<p>
+  <%= link_to 'Nueva reserva', new_book_path %> | 
+  <%= link_to 'Volver a la Página Principal', root_path %>
+</p>
