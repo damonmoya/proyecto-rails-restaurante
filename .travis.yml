@@ -21,3 +21,6 @@ deploy:
   app: proyecto-rails-restaurante
   on:
     repo: damonmoya/proyecto-rails-restaurante
+  run:
+    - "rake db:migrate"
+    - "rake db:seed"
