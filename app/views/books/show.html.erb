@@ -8,7 +8,7 @@
 </p>
 
 <p>
-  <strong>Fecha y Hora:</strong>
+  <strong>Fecha y hora:</strong>
   <%= @book.start_time %>
 </p>
 
@@ -18,12 +18,12 @@
 </p>
 
 <p>
-  <strong>Confirmación:</strong>
+  <strong>Estado de la reserva:</strong>
   <strong>
     <% if @book.is_confirmed %>
-      &#10004
+      Confirmada
     <% else %>
-      &#10006
+      Pendiente
     <% end %>
   </strong>
 </p>

@@ -3,8 +3,7 @@ class BooksController < ApplicationController
 
   # GET /books or /books.json
   def index
-    @pending_books = Book.where.not(is_confirmed: true)
-    @confirmed_books = Book.where(is_confirmed: true)
+    @books = Book.all
   end
 
   # GET /books/1 or /books/1.json
