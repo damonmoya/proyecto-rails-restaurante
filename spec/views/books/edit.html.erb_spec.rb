@@ -6,7 +6,7 @@ RSpec.describe "books/edit", type: :view do
       email: "email1@hotmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
       diners: 1,
-      is_confirmed: false
+      state: 0
     ))
   end
 
@@ -16,9 +16,9 @@ RSpec.describe "books/edit", type: :view do
     assert_select "form[action=?][method=?]", book_path(@book), "post" do
 
       assert_select "input[name=?]", "book[email]"
-      assert_select "select", 5
+      assert_select "select", 6
       assert_select "input[name=?]", "book[diners]"
-      assert_select "input[name=?]", "book[is_confirmed]"
+      assert_select "select[name=?]", "book[state]"
     end
   end
 end

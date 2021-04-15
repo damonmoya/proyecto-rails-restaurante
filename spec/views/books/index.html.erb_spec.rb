@@ -7,25 +7,25 @@ RSpec.describe "books/index", type: :view do
         email: "email1@hotmail.com",
         start_time: "2021-04-22 14:32:00 UTC",
         diners: 2,
-        is_confirmed: false
+        state: 0
       ),
       Book.create!(
         email: "email2@gmail.com",
         start_time: "2021-05-30 14:32:00 UTC",
         diners: 4,
-        is_confirmed: false
+        state: 0
       ),
       Book.create!(
         email: "email3@hotmail.com",
         start_time: "2022-04-22 14:32:00 UTC",
         diners: 1,
-        is_confirmed: true
+        state: 1
       ),
       Book.create!(
         email: "email4@gmail.com",
         start_time: "2022-05-30 14:32:00 UTC",
         diners: 3,
-        is_confirmed: true
+        state: 1
       )
     ])
   end

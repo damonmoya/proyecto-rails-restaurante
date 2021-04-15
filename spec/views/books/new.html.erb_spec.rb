@@ -6,7 +6,7 @@ RSpec.describe "books/new", type: :view do
       email: "email1@hotmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
       diners: 1,
-      is_confirmed: false
+      state: 0
     ))
   end
 

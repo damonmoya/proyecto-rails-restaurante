@@ -4,7 +4,7 @@ class CreateBooks < ActiveRecord::Migration[6.0]
       t.string :email
       t.datetime :start_time
       t.integer :diners
-      t.boolean :is_confirmed, default: false
+      t.integer :state, default: 0
 
       t.timestamps
     end

@@ -38,11 +38,9 @@ class BooksController < ApplicationController
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
-
-    if book_params[:is_confirmed]
+    if book_params[:state] === "1" && @book.state.to_s != book_params[:state]
       BookMailer.with(book: @book).book_confirmation.deliver_now
     end
-
     respond_to do |format|
       if @book.update(book_params)
         format.html { redirect_to @book, notice: "Reserva actualizada." }
@@ -71,6 +69,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:email, :start_time, :diners, :is_confirmed)
+      params.require(:book).permit(:email, :start_time, :diners, :state)
     end
 end

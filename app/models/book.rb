@@ -7,5 +7,5 @@ class Book < ActiveRecord::Base
     validates :diners, numericality: { only_integer: true, message: "No es un número" }, allow_nil: true
     validates :diners, numericality: {greater_than: 0, message: "La reserva debe contar con mínimo un comensal"}, allow_nil: true
     validates :diners, numericality: {less_than: 5, message: "La reserva solo permite un máximo de 4 comensales"}, allow_nil: true
-    validates_inclusion_of :is_confirmed, in: [true, false]
+    validates :state, :inclusion => 0..4
 end

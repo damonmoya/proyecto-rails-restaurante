@@ -2,7 +2,6 @@
   <% if book.errors.any? %>
     <div id="error_explanation">
     <h2>No se ha podido realizar la reserva</h2>
-
       <ul>
         <% book.errors.messages.values.each do |message| %>
           <%message.each do |msg| %>
@@ -29,14 +28,14 @@
   </div>
 
   <% if form_type === "create" %>
-    <%= form.hidden_field :is_confirmed, value: false %>
+    <%= form.hidden_field :state, value: 0 %>
   <% elsif form_type === "edit" %>
-    <% if book.is_confirmed %>
-      <%= form.hidden_field :is_confirmed, value: true %>
+    <% if book.state === 1 %>
+      <%= form.hidden_field :state, value: 1 %>
     <% else %>
       <div class="field">
-        <%= form.label :is_confirmed, '¿Reserva confirmada?' %>
-        <%= form.check_box :is_confirmed %>
+        <%= form.label :state, 'Estado de la reserva' %>
+        <%= form.select :state, [["Pendiente", 0], ["Confirmada", 1]] %>
       </div>
     <% end %>
   <% end %>

@@ -6,12 +6,12 @@ RSpec.describe BookMailer, type: :mailer do
       email: "prueba1@gmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
       diners: 1,
-      is_confirmed: false
+      state: 0
     ) }
     let(:mail) { BookMailer.with(book: book).book_pending_customer }
 
     it 'receives pending book' do
-      expect(book.is_confirmed).to eq(false)
+      expect(book.state).to eq(0)
     end
 
     it 'renders the subject' do
@@ -54,12 +54,12 @@ RSpec.describe BookMailer, type: :mailer do
       email: "prueba1@gmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
       diners: 1,
-      is_confirmed: false
+      state: 0
     ) }
     let(:mail) { BookMailer.with(book: book).book_pending_admin }
 
     it 'receives pending book' do
-      expect(book.is_confirmed).to eq(false)
+      expect(book.state).to eq(0)
     end
 
     it 'renders the subject' do
@@ -102,12 +102,12 @@ RSpec.describe BookMailer, type: :mailer do
       email: "prueba3@gmail.com",
       start_time: "2021-06-22 14:32:00 UTC",
       diners: 4,
-      is_confirmed: true
+      state: 1
     ) }
     let(:mail) { BookMailer.with(book: book).book_confirmation }
 
     it 'receives confirmed book' do
-      expect(book.is_confirmed).to eq(true)
+      expect(book.state).to eq(1)
     end
 
     it 'renders the subject' do
