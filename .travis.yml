@@ -1,0 +1,24 @@
+language: ruby
+services:
+- postgresql
+before_script:
+- psql -c 'create database travis_ci_test;' -U postgres
+- bundle exec rake db:create db:migrate RAILS_ENV=test
+cache:
+  bundler: true
+  directories:
+  - node_modules
+  yarn: true
+install:
+- bundle install
+- nvm install node
+- node -v
+- npm i -g yarn
+- yarn
+deploy:
+  provider: heroku
+  api_key:
+    secure: XCpa3KN2xFb+wwt8IuFTTr5ZleLMdvo5bndAzimhE70kLuHolCSF6gxJRYvljO5inB8of43rP34z60zNJDEfNms85ifpfTj8AMh9Hcoyp+Iu3ZD5mNb1laamsNG4EOzCWtfaehcYP9TTgjySLWSnloYoCgzGtgCnDV0S2WVdMfbninnWRZVF+PFas9YBRiEn/TzH7c9ZJCYTZlOKE/YNdUEKLJYTmZf3yN3inHheKPRJV7TcwEmOjtDspGf39jYz6Vu9STxRQR6qYz+khFTqDPm718n2n71hp2S2Gsa88WSBM31aaxQVJaWBWgLOATlPTBpzFzl90E/g30rQHrEJfZRr0Rk2OWJ4GNy2hg54ZxmFQ7ga08SK5GJHQm+GeqF+Wb7naDMoHP3mkRZqFmgemUkJEHaTco3JnesrpySmBPxMZlSI4lKtZ/ThdrSfO8s/q+UIsOD+rLAFtRT6hEVxQpt/VZQvJzF8JkY3oXsuZAl0Zl4xt/O8XFG/GQXW4GdSXD+sZDcMgsUpTIDLI06GaqhIO2FJilokw0OJMLCA7xg91R8HfrplTW5v33NNXrWG/nNenfob4QvTsGxh5hhZeBQ5mzYu+G19MEMk3yes8cT80uEq5nToCZYXnDI7tbQEJHx0LE4Kj8jBYh+cgS0SsRSja7QsCazhCvhlwbtt8Y4=
+  app: prueba-rails-restaurante
+  on:
+    repo: damonmoya/prueba-rails-restaurante
