@@ -1,5 +1,5 @@
 class BookMailer < ApplicationMailer
-    default from: 'mirestaurante@example.com'
+    default from: 'notificaciones.restauranterails@gmail.com'
 
     def book_pending_customer
       @book = params[:book]
@@ -9,7 +9,7 @@ class BookMailer < ApplicationMailer
 
     def book_pending_admin
       @book = params[:book]
-      @admin_email = "damon99@hotmail.es"
+      @admin_email = "notificaciones.restauranterails@gmail.com"
       mail(to: @admin_email, subject: 'Reserva pendiente de confirmar')
     end
 

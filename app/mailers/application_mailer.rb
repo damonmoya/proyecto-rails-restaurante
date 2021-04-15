@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'mirestaurante@example.com'
+  default from: 'notificaciones.restauranterails@gmail.com'
   layout 'mailer'
 end

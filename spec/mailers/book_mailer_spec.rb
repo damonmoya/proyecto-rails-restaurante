@@ -23,7 +23,7 @@ RSpec.describe BookMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['mirestaurante@example.com'])
+      expect(mail.from).to eq(['notificaciones.restauranterails@gmail.com'])
     end
 
     it 'renders email body headers' do
@@ -71,7 +71,7 @@ RSpec.describe BookMailer, type: :mailer do
     #end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['mirestaurante@example.com'])
+      expect(mail.from).to eq(['notificaciones.restauranterails@gmail.com'])
     end
 
     it 'renders email body headers' do
@@ -119,7 +119,7 @@ RSpec.describe BookMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq(['mirestaurante@example.com'])
+      expect(mail.from).to eq(['notificaciones.restauranterails@gmail.com'])
     end
 
     it 'renders email body headers' do
