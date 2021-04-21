@@ -87,7 +87,7 @@ RSpec.describe "/books", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        {email: "prueba2@gmail.com", start_time: "2021-07-30 14:32:00 UTC", diners: 1, state: "pending"}
+        {email: "prueba2@gmail.com", start_time: "2021-07-30 14:32:00 UTC", diners: 1, state: "confirmed"}
       }
 
       it "updates the requested book" do
@@ -95,6 +95,7 @@ RSpec.describe "/books", type: :request do
         patch book_url(book), params: { book: new_attributes }
         book.reload
         expect(response).to redirect_to(book_url(book))
+        expect(ActionMailer::Base.deliveries.count).to eq(1)
       end
 
       it "redirects to the book" do

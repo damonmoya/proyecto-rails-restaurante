@@ -1,0 +1,215 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/vagrant/proyecto-rails-restaurante/app/helpers/application_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/helpers/books_helper.rb": {
+        "lines": [
+          1,
+          1,
+          13,
+          7,
+          6,
+          4,
+          2,
+          2,
+          null,
+          null,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/helpers/restaurant_helper.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/mailers/book_mailer.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          10,
+          10,
+          10,
+          null,
+          null,
+          1,
+          9,
+          9,
+          9,
+          null,
+          null,
+          1,
+          10,
+          10,
+          null,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/mailers/application_mailer.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/controllers/books_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          2,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          4,
+          null,
+          4,
+          4,
+          2,
+          2,
+          4,
+          2,
+          null,
+          4,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          3,
+          2,
+          null,
+          3,
+          3,
+          4,
+          2,
+          null,
+          2,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          2,
+          2,
+          4,
+          2,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          8,
+          null,
+          null,
+          null,
+          1,
+          10,
+          null,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/controllers/application_controller.rb": {
+        "lines": [
+          1,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/controllers/restaurant_controller.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/models/book.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "/vagrant/proyecto-rails-restaurante/app/channels/application_cable/channel.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/vagrant/proyecto-rails-restaurante/app/channels/application_cable/connection.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/vagrant/proyecto-rails-restaurante/app/jobs/application_job.rb": {
+        "lines": [
+          0,
+          null,
+          null,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      }
+    },
+    "timestamp": 1619027767
+  }
+}

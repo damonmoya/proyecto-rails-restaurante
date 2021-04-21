@@ -52,5 +52,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'webdrivers'
- gem 'selenium-webdriver'
+  gem 'selenium-webdriver'
 end
+
+gem 'simplecov', require: false, group: :test

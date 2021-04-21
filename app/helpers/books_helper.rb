@@ -6,8 +6,6 @@ module BooksHelper
         "Confirmada"
       elsif book.state == "no_show"
         "No presentada" 
-      else 
-        "Desconocido" 
       end
     end
 end
