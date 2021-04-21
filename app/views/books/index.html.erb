@@ -19,14 +19,7 @@
           <td><%= book.email %></td>
           <td><%= book.start_time %></td>
           <td><%= book.diners %></td>
-          <td>
-            <% if book.confirmed? %>
-              Confirmada
-            <% end %>
-            <% if book.pending? %>
-              Pendiente
-            <% end %>
-          </td>
+          <td><%= state_book(book) %></td>
           <td><%= link_to 'Detalles', book %></td>
           <td><%= link_to 'Editar', edit_book_path(book) %></td>
           <td><%= link_to 'Eliminar', book, method: :delete, data: { confirm: '¿Eliminar reserva?' } %></td>

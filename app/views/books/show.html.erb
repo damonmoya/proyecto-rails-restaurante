@@ -19,12 +19,7 @@
 
 <p>
   <strong>Estado de la reserva:</strong>
-    <% if @book.confirmed? %>
-      Confirmada
-    <% end %>
-    <% if @book.pending? %>
-      Pendiente
-    <% end %>
+  <%= state_book(@book) %>
 </p>
 
 <%= link_to 'Editar reserva', edit_book_path(@book) %> |
