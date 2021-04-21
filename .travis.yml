@@ -13,6 +13,7 @@ install:
 - bundle install
 - nvm install node
 - npm i -g yarn
+- yarn add node-sass
 - yarn
 deploy:
   provider: heroku
