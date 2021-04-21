@@ -28,14 +28,14 @@
   </div>
 
   <% if form_type === "create" %>
-    <%= form.hidden_field :state, value: 0 %>
+    <%= form.hidden_field :state, value: :pending %>
   <% elsif form_type === "edit" %>
-    <% if book.state === 1 %>
-      <%= form.hidden_field :state, value: 1 %>
+    <% if book.state === :confirmed %>
+      <%= form.hidden_field :state, value: :confirmed %>
     <% else %>
       <div class="field">
         <%= form.label :state, 'Estado de la reserva' %>
-        <%= form.select :state, [["Pendiente", 0], ["Confirmada", 1]] %>
+        <%= form.select :state, [["Pendiente", Book.states.key(0)], ["Confirmada", Book.states.key(1)], ["No presentada", Book.states.key(2)]] %>      
       </div>
     <% end %>
   <% end %>

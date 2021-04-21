@@ -20,10 +20,10 @@
           <td><%= book.start_time %></td>
           <td><%= book.diners %></td>
           <td>
-            <% if book.state === 1%>
+            <% if book.confirmed? %>
               Confirmada
             <% end %>
-            <% if book.state === 0 %>
+            <% if book.pending? %>
               Pendiente
             <% end %>
           </td>

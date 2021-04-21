@@ -38,7 +38,7 @@ class BooksController < ApplicationController
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
-    if book_params[:state] === "1" && @book.state.to_s != book_params[:state]
+    if book_params[:state] === "confirmed" && @book.state === "pending"
       BookMailer.with(book: @book).book_confirmation.deliver_now
     end
     respond_to do |format|

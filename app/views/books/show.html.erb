@@ -19,10 +19,10 @@
 
 <p>
   <strong>Estado de la reserva:</strong>
-    <% if @book.state === 1 %>
+    <% if @book.confirmed? %>
       Confirmada
     <% end %>
-    <% if @book.state === 0 %>
+    <% if @book.pending? %>
       Pendiente
     <% end %>
 </p>

@@ -11,7 +11,7 @@ RSpec.describe BookMailer, type: :mailer do
     let(:mail) { BookMailer.with(book: book).book_pending_customer }
 
     it 'receives pending book' do
-      expect(book.state).to eq(0)
+      expect(book.state).to eq("pending")
     end
 
     it 'renders the subject' do
@@ -59,7 +59,7 @@ RSpec.describe BookMailer, type: :mailer do
     let(:mail) { BookMailer.with(book: book).book_pending_admin }
 
     it 'receives pending book' do
-      expect(book.state).to eq(0)
+      expect(book.state).to eq("pending")
     end
 
     it 'renders the subject' do
@@ -107,7 +107,7 @@ RSpec.describe BookMailer, type: :mailer do
     let(:mail) { BookMailer.with(book: book).book_confirmation }
 
     it 'receives confirmed book' do
-      expect(book.state).to eq(1)
+      expect(book.state).to eq("confirmed")
     end
 
     it 'renders the subject' do
