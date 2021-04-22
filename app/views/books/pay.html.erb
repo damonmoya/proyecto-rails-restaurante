@@ -1,0 +1,35 @@
+<h1>Cargo por reserva</h1>
+
+<p>
+    Se te ha redirigido a esta página porque se han encontrado reservas 
+    no presentadas vinculadas a su correo:
+</p>
+
+<% if @blacklisted_books.count >= 1 %>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Fecha y hora</th>
+        <th>Comensales</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @blacklisted_books.each do |book| %>
+        <tr>
+          <td><%= book.email %></td>
+          <td><%= book.start_time %></td>
+          <td><%= book.diners %></td>
+          <td><%= state_book(book) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div>¡No hay reservas!</div>
+<% end %>
+
+<p>
+  <%= link_to 'Volver a la Página Principal', root_path %>
+</p>

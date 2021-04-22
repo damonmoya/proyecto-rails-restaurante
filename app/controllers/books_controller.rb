@@ -10,6 +10,11 @@ class BooksController < ApplicationController
   def show
   end
 
+  def pay
+    @book = Book.find(params[:id])
+    @blacklisted_books = Book.where(state: "no_show", email: @book.email)
+  end
+
   # GET /books/new
   def new
     @book = Book.new
@@ -21,14 +26,24 @@ class BooksController < ApplicationController
 
   # POST /books or /books.json
   def create
-    @book = Book.new(book_params)
 
+    # Check if email is blacklisted
+    @books = Book.all
+    @blacklisted_books = Book.where(state: "no_show", email: book_params[:email])
+
+    @book = Book.new(book_params)
+    
     respond_to do |format|
       if @book.save
-        BookMailer.with(book: @book).book_pending_customer.deliver_now
-        BookMailer.with(book: @book).book_pending_admin.deliver_now
-        format.html { redirect_to @book, notice: "Reserva realizada." }
-        format.json { render :show, status: :created, location: @book }
+        if @blacklisted_books.count > 0 
+          format.html { redirect_to pay_book_path(@book) }
+          format.json { render :pay, status: :created, location: pay_book_path(@book) }
+        else
+          BookMailer.with(book: @book).book_pending_customer.deliver_now
+          BookMailer.with(book: @book).book_pending_admin.deliver_now
+          format.html { redirect_to @book, notice: "Reserva realizada." }
+          format.json { render :show, status: :created, location: @book }
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @book.errors, status: :unprocessable_entity }

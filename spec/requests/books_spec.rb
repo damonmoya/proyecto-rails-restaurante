@@ -20,6 +20,10 @@ RSpec.describe "/books", type: :request do
     {email: "prueba@gmail.com", start_time: "2021-05-30 14:32:00 UTC", diners: 1, state: "pending"}
   }
 
+  let(:valid_noshow_attributes) {
+    {email: "prueba@gmail.com", start_time: "2021-05-30 14:32:00 UTC", diners: 1, state: "no_show"}
+  }
+
   let(:invalid_attributes) {
     {email: nil, start_time: nil, diners: 0, state: "pending"}
   }
@@ -38,6 +42,7 @@ RSpec.describe "/books", type: :request do
       get book_url(book)
       expect(response).to be_successful
     end
+    
   end
 
   describe "GET /new" do
@@ -82,6 +87,22 @@ RSpec.describe "/books", type: :request do
         expect(response).to be_successful
       end
     end
+  end
+
+  describe "POST /create (no-show books present)" do
+
+    it "no-show books present" do
+      @book1 = Book.create! valid_noshow_attributes
+      expect {
+        post books_url, params: { book: valid_attributes }
+      }.to change(Book, :count).by(1)
+      expect(Book.last.email).to   eq(@book1.email)
+      get pay_book_path(Book.last)
+      expect(response).to be_successful
+      post books_url, params: { book: valid_attributes }
+      expect(response).to redirect_to(pay_book_url(Book.last))
+    end
+
   end
 
   describe "PATCH /update" do
