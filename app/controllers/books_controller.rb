@@ -1,4 +1,5 @@
 class BooksController < ApplicationController
+  rescue_from Stripe::CardError, with: :catch_exception
   before_action :set_book, only: %i[ show edit update destroy ]
 
   # GET /books or /books.json
@@ -13,6 +14,34 @@ class BooksController < ApplicationController
   def pay
     @book = Book.find(params[:id])
     @blacklisted_books = Book.where(state: "no_show", email: @book.email)
+  end
+
+  def checkout
+    @book = Book.find(params[:id])
+
+    customer = Stripe::Customer.create(
+      :email => params[:stripeEmail],
+      :source => params[:stripeToken]
+    )
+
+    charge = Stripe::Charge.create(
+      :customer => customer.id,
+      :amount => 500,
+      :description => 'Book charge',
+      :currency => 'eur'
+    )
+
+    @book.state = "pending"
+    respond_to do |format|
+      if @book.save
+          BookMailer.with(book: @book).book_pending_customer.deliver_now
+          BookMailer.with(book: @book).book_pending_admin.deliver_now
+      end
+
+      format.html { redirect_to books_path }
+      format.json { render :index, location: books_path }
+    end
+
   end
 
   # GET /books/new
@@ -89,5 +118,9 @@ class BooksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def book_params
       params.require(:book).permit(:email, :start_time, :diners, :state, :charge)
+    end
+  
+    def catch_exception(exception)
+      flash[:error] = exception.message
     end
 end

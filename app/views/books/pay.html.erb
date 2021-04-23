@@ -30,6 +30,31 @@
   <div>¡No hay reservas!</div>
 <% end %>
 
+<%= form_tag checkout_book_path do %>
+<article>
+  <% if flash[:error].present? %>
+  <div id="error_explanation">
+    <p><%= flash[:error] %></p>
+  </div>
+  <% end %>
+  <label class="amount">
+    <span>Importe: <strong><%= @book.charge %>€</strong></span>
+  </label>
+</article>
+<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+  data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+  data-label="Pagar cargo"
+  data-name="Pagar cargo por reserva"
+  data-description="Pago con tarjeta"
+  data-amount="500"
+  data-currency="eur"
+  data-locale="auto"></script>
+<% end %>
+<script src="https://js.stripe.com/v2/"></script> 
+<script>
+  Stripe.setPublishableKey('pk_test_51IiyYkEDqZ0GL2iF1RR05lQxOvnGwIVE2oGrDE64ylKQaWyzXm6bdCkGoEp2v03AnxF6GN5b9q2yAzVyZHJIR4rX00HurZdGki');
+</script>
+
 <p>
   <%= link_to 'Cancelar reserva', @book, method: :delete, data: { confirm: '¿Cancelar reserva?' } %>
 </p>

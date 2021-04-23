@@ -57,3 +57,4 @@ end
 
 gem 'simplecov', require: false, group: :test
 gem 'money-rails', '~>1.12'
+gem 'stripe'

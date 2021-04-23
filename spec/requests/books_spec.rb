@@ -24,6 +24,10 @@ RSpec.describe "/books", type: :request do
     {email: "prueba@gmail.com", start_time: "2021-05-30 14:32:00 UTC", diners: 1, state: "no_show"}
   }
 
+  let(:valid_topay_attributes) {
+    {email: "prueba@gmail.com", start_time: "2021-05-30 14:32:00 UTC", diners: 1, state: "to_pay"}
+  }
+
   let(:invalid_attributes) {
     {email: nil, start_time: nil, diners: 0, state: "pending"}
   }
@@ -103,6 +107,19 @@ RSpec.describe "/books", type: :request do
       expect(response).to be_successful
       post books_url, params: { book: valid_attributes }
       expect(response).to redirect_to(pay_book_url(Book.last))
+    end
+
+  end
+
+  describe "POST /checkout" do
+
+    it "checkouts book" do
+      book1 = Book.create! valid_topay_attributes
+      expect {
+        post checkout_book_path(book1)
+      }.to change(Book, :count).by(0)
+      post checkout_book_path(book1)
+      expect(response).to be_successful
     end
 
   end
