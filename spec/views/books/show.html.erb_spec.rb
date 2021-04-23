@@ -20,5 +20,7 @@ RSpec.describe "books/show", type: :view do
     expect(rendered).to match(/2/)
     expect(rendered).to match(/Estado de la reserva:/)
     expect(rendered).to match(/Pendiente/)
+    expect(rendered).to match(/Cargo en la reserva:/)
+    expect(rendered).to match(/Sin cargo/)    
   end
 end

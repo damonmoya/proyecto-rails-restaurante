@@ -1,5 +1,6 @@
 class Book < ApplicationRecord
-    enum state: { pending: 0, confirmed: 1, no_show: 2 }
+    enum state: { pending: 0, confirmed: 1, no_show: 2, to_pay: 3 }
+    monetize :optional_charge_cents, allow_nil: true, as: "charge"
 
     VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
     validates :email, presence: { message: "No se ha introducido el email" }
@@ -10,4 +11,10 @@ class Book < ApplicationRecord
     validates :diners, numericality: {greater_than: 0, message: "La reserva debe contar con mínimo un comensal"}, allow_nil: true
     validates :diners, numericality: {less_than: 5, message: "La reserva solo permite un máximo de 4 comensales"}, allow_nil: true
     validates :state, inclusion: { in: states.keys }
+    monetize :optional_charge_cents, allow_nil: true,
+        numericality: {
+          greater_than_or_equal_to: 0,
+          less_than_or_equal_to: 500,
+          message: "Valor de cargo no válido"
+        }
 end

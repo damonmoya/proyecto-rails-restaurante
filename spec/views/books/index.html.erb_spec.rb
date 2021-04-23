@@ -25,7 +25,8 @@ RSpec.describe "books/index", type: :view do
         email: "email4@gmail.com",
         start_time: "2022-05-30 14:32:00 UTC",
         diners: 3,
-        state: 1
+        state: 3,
+        charge: Money.new(500, "EUR")
       )
     ])
   end
@@ -40,6 +41,7 @@ RSpec.describe "books/index", type: :view do
     assert_select "tr>th", text: "Fecha y hora".to_s, count: 1
     assert_select "tr>th", text: "Comensales".to_s, count: 1
     assert_select "tr>th", text: "Estado".to_s, count: 1
+    assert_select "tr>th", text: "Cargo".to_s, count: 1
     assert_select "tr>th", text: "Acciones".to_s, count: 1
     ###########################
     assert_select "tr>td", text: "email1@hotmail.com".to_s, count: 1
@@ -59,7 +61,12 @@ RSpec.describe "books/index", type: :view do
     assert_select "tr>td", text: 3.to_s, count: 1
     ###########################
     assert_select "tr>td", text: "Pendiente".to_s, count: 2
-    assert_select "tr>td", text: "Confirmada".to_s, count: 2
+    assert_select "tr>td", text: "Confirmada".to_s, count: 1
+    assert_select "tr>td", text: "A pagar".to_s, count: 1
+    ###########################
+    assert_select "tr>td", text: "Sin cargo".to_s, count: 3
+    assert_select "tr>td", text: "5.00€".to_s, count: 1
+    ###########################
   end
 end
 

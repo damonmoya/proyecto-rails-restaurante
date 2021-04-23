@@ -32,6 +32,10 @@ class BooksController < ApplicationController
     @blacklisted_books = Book.where(state: "no_show", email: book_params[:email])
 
     @book = Book.new(book_params)
+    if @blacklisted_books.count > 0 
+      @book.state = "to_pay"
+      @book.charge = Money.new(500, "EUR")
+    end
     
     respond_to do |format|
       if @book.save
@@ -84,6 +88,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.require(:book).permit(:email, :start_time, :diners, :state)
+      params.require(:book).permit(:email, :start_time, :diners, :state, :charge)
     end
 end

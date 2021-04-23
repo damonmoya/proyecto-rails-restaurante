@@ -22,5 +22,10 @@
   <%= state_book(@book) %>
 </p>
 
+<p>
+  <strong>Cargo en la reserva:</strong>
+  <%= charge_book(@book) %>
+</p>
+
 <%= link_to 'Editar reserva', edit_book_path(@book) %> |
 <%= link_to 'Volver a sección de reservas', books_path %>

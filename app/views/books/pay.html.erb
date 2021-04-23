@@ -31,5 +31,5 @@
 <% end %>
 
 <p>
-  <%= link_to 'Volver a la Página Principal', root_path %>
+  <%= link_to 'Cancelar reserva', @book, method: :delete, data: { confirm: '¿Cancelar reserva?' } %>
 </p>

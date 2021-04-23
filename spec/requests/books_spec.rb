@@ -97,6 +97,8 @@ RSpec.describe "/books", type: :request do
         post books_url, params: { book: valid_attributes }
       }.to change(Book, :count).by(1)
       expect(Book.last.email).to   eq(@book1.email)
+      expect(Book.last.charge).to   eq(Money.new(500, "EUR"))
+      expect(Book.last.state).to   eq("to_pay")
       get pay_book_path(Book.last)
       expect(response).to be_successful
       post books_url, params: { book: valid_attributes }

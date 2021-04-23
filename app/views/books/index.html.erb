@@ -10,6 +10,7 @@
         <th>Fecha y hora</th>
         <th>Comensales</th>
         <th>Estado</th>
+        <th>Cargo</th>
         <th colspan="3">Acciones</th>
       </tr>
     </thead>
@@ -20,6 +21,7 @@
           <td><%= book.start_time %></td>
           <td><%= book.diners %></td>
           <td><%= state_book(book) %></td>
+          <td><%= charge_book(book) %></td>
           <td><%= link_to 'Detalles', book %></td>
           <td><%= link_to 'Editar', edit_book_path(book) %></td>
           <td><%= link_to 'Eliminar', book, method: :delete, data: { confirm: '¿Eliminar reserva?' } %></td>
