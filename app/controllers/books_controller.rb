@@ -12,34 +12,57 @@ class BooksController < ApplicationController
   end
 
   def pay
-    @book = Book.find(params[:id])
-    @blacklisted_books = Book.where(state: "no_show", email: @book.email)
+    if (params[:email] == nil || params[:diners] == nil ||
+      params[:start_time_1i] == nil || params[:start_time_2i] == nil || 
+      params[:start_time_3i] == nil || params[:start_time_4i] == nil || 
+      params[:start_time_5i] == nil)
+      respond_to do |format|
+        format.html { redirect_to books_url}
+        format.json { head :no_content }
+      end
+    end
+    @email = params[:email]
+    @diners = params[:diners]
+    @start_time_1i = params[:start_time_1i]
+    @start_time_2i = params[:start_time_2i]
+    @start_time_3i = params[:start_time_3i]
+    @start_time_4i = params[:start_time_4i]
+    @start_time_5i = params[:start_time_5i]
   end
 
   def checkout
-    @book = Book.find(params[:id])
-
-    customer = Stripe::Customer.create(
-      :email => params[:stripeEmail],
-      :source => params[:stripeToken]
+    datetime=DateTime.civil(params[:start_time_1i].to_i, params[:start_time_2i].to_i, params[:start_time_3i].to_i,
+      params[:start_time_4i].to_i, params[:start_time_5i].to_i,)
+    @book = Book.new(
+      email: params[:email], 
+      diners: params[:diners],
+      start_time: datetime,
+      state: "pending",
+      charge: Money.new(500, "EUR")
     )
 
-    charge = Stripe::Charge.create(
-      :customer => customer.id,
-      :amount => 500,
-      :description => 'Book charge',
-      :currency => 'eur'
-    )
+    if @book.save
 
-    @book.state = "pending"
-    respond_to do |format|
-      if @book.save
-          BookMailer.with(book: @book).book_pending_customer.deliver_now
-          BookMailer.with(book: @book).book_pending_admin.deliver_now
+      BookMailer.with(book: @book).book_pending_customer.deliver_now
+      BookMailer.with(book: @book).book_pending_admin.deliver_now
+
+      customer = Stripe::Customer.create(
+        :email => params[:stripeEmail],
+        :source => params[:stripeToken]
+      )
+
+      charge = Stripe::Charge.create(
+        :customer => customer.id,
+        :amount => 500,
+        :description => 'Book charge',
+        :currency => 'eur'
+      )
+
+      respond_to do |format|
+        format.html { redirect_to books_url, notice: "Reserva pagada." }
+        format.json { render :index, location: books_path }
       end
 
-      format.html { redirect_to books_path }
-      format.json { render :index, location: books_path }
     end
 
   end
@@ -60,27 +83,35 @@ class BooksController < ApplicationController
     @books = Book.all
     @blacklisted_books = Book.where(state: "no_show", email: book_params[:email])
 
-    @book = Book.new(book_params)
-    if @blacklisted_books.count > 0 
-      @book.state = "to_pay"
-      @book.charge = Money.new(500, "EUR")
-    end
+    # if @blacklisted_books.count > 0 
+    #   @new_book.state = "to_pay"
+    #   @new_book.charge = Money.new(500, "EUR")
+    # end
     
     respond_to do |format|
-      if @book.save
-        if @blacklisted_books.count > 0 
-          format.html { redirect_to pay_book_path(@book) }
-          format.json { render :pay, status: :created, location: pay_book_path(@book) }
-        else
+      if @blacklisted_books.count > 0 
+        
+        format.html { redirect_to pay_books_path(
+          email: book_params[:email], 
+          diners: book_params[:diners],
+          start_time_1i: book_params["start_time(1i)"], 
+          start_time_2i: book_params["start_time(2i)"], 
+          start_time_3i: book_params["start_time(3i)"], 
+          start_time_4i: book_params["start_time(4i)"], 
+          start_time_5i: book_params["start_time(5i)"] 
+        ) }
+        format.json { render :pay, status: :created, location: pay_books_path }
+      else
+        @book = Book.new(book_params)
+        if @book.save
           BookMailer.with(book: @book).book_pending_customer.deliver_now
           BookMailer.with(book: @book).book_pending_admin.deliver_now
           format.html { redirect_to @book, notice: "Reserva realizada." }
           format.json { render :show, status: :created, location: @book }
         end
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @book.errors, status: :unprocessable_entity }
       end
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @book.errors, status: :unprocessable_entity }
     end
   end
 

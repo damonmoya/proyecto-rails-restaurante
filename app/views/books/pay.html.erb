@@ -2,35 +2,17 @@
 
 <p>
     Se te ha redirigido a esta página porque se han encontrado reservas 
-    no presentadas vinculadas a su correo:
+    no presentadas vinculadas a su correo.
 </p>
 
-<% if @blacklisted_books.count >= 1 %>
-  <table>
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Fecha y hora</th>
-        <th>Comensales</th>
-        <th>Estado</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @blacklisted_books.each do |book| %>
-        <tr>
-          <td><%= book.email %></td>
-          <td><%= book.start_time %></td>
-          <td><%= book.diners %></td>
-          <td><%= state_book(book) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <div>¡No hay reservas!</div>
-<% end %>
-
-<%= form_tag checkout_book_path do %>
+<%= form_tag checkout_books_path do %>
+<%= hidden_field_tag "email", @email %>
+<%= hidden_field_tag "diners", @diners %>
+<%= hidden_field_tag "start_time_1i", @start_time_1i %>
+<%= hidden_field_tag "start_time_2i", @start_time_2i %>
+<%= hidden_field_tag "start_time_3i", @start_time_3i %>
+<%= hidden_field_tag "start_time_4i", @start_time_4i %>
+<%= hidden_field_tag "start_time_5i", @start_time_5i %>
 <article>
   <% if flash[:error].present? %>
   <div id="error_explanation">
@@ -38,7 +20,7 @@
   </div>
   <% end %>
   <label class="amount">
-    <span>Importe: <strong><%= @book.charge %>€</strong></span>
+    <span>Importe: <strong>5.00€</strong></span>
   </label>
 </article>
 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -48,6 +30,7 @@
   data-description="Pago con tarjeta"
   data-amount="500"
   data-currency="eur"
+  data-email=<%= @email %>>
   data-locale="auto"></script>
 <% end %>
 <script src="https://js.stripe.com/v2/"></script> 
@@ -56,5 +39,5 @@
 </script>
 
 <p>
-  <%= link_to 'Cancelar reserva', @book, method: :delete, data: { confirm: '¿Cancelar reserva?' } %>
+  <%= link_to 'Cancelar reserva', books_path, data: { confirm: '¿Cancelar reserva?' } %>
 </p>

@@ -99,27 +99,62 @@ RSpec.describe "/books", type: :request do
       @book1 = Book.create! valid_noshow_attributes
       expect {
         post books_url, params: { book: valid_attributes }
-      }.to change(Book, :count).by(1)
-      expect(Book.last.email).to   eq(@book1.email)
-      expect(Book.last.charge).to   eq(Money.new(500, "EUR"))
-      expect(Book.last.state).to   eq("to_pay")
-      get pay_book_path(Book.last)
-      expect(response).to be_successful
+      }.to change(Book, :count).by(0)
       post books_url, params: { book: valid_attributes }
-      expect(response).to redirect_to(pay_book_url(Book.last))
+      expect(response).to redirect_to(pay_books_path(
+        email: valid_attributes[:email], 
+        diners: valid_attributes[:diners],
+        start_time_1i: valid_attributes["start_time(1i)"], 
+        start_time_2i: valid_attributes["start_time(2i)"], 
+        start_time_3i: valid_attributes["start_time(3i)"], 
+        start_time_4i: valid_attributes["start_time(4i)"], 
+        start_time_5i: valid_attributes["start_time(5i)"] 
+      ))
+      get pay_books_url, params: { 
+        email: valid_attributes[:email], 
+        diners: valid_attributes[:diners],
+        start_time_1i: "2021", 
+        start_time_2i: "05", 
+        start_time_3i: "30", 
+        start_time_4i: "14", 
+        start_time_5i: "32" 
+      }
+      expect(response).to be_successful
     end
 
   end
 
+  describe "GET /pay" do
+    it "redirect to books" do
+      get pay_books_url, params: { 
+        diners: valid_attributes[:diners],
+        start_time_1i: "2021", 
+        start_time_2i: "05", 
+        start_time_3i: "30", 
+        start_time_4i: "14", 
+        start_time_5i: "32" 
+      }
+      expect(response).to redirect_to(books_path)
+    end
+  end
+
   describe "POST /checkout" do
 
-    it "checkouts book" do
+    it "creates new book" do
       book1 = Book.create! valid_topay_attributes
       expect {
-        post checkout_book_path(book1)
-      }.to change(Book, :count).by(0)
-      post checkout_book_path(book1)
-      expect(response).to be_successful
+        post checkout_books_url, params: { 
+          email: valid_attributes[:email], 
+          diners: valid_attributes[:diners],
+          start_time_1i: "2021", 
+          start_time_2i: "05", 
+          start_time_3i: "30", 
+          start_time_4i: "14", 
+          start_time_5i: "32" 
+        }
+      }.to change(Book, :count).by(1)
+      expect(ActionMailer::Base.deliveries.count).to eq(2)
+      #expect(response).to be_successful
     end
 
   end
