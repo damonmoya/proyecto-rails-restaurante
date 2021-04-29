@@ -5,7 +5,7 @@ RSpec.describe BookMailer, type: :mailer do
     let(:book) { Book.create!(
       email: "prueba1@gmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
-      diners: 1,
+      diners: 2,
       state: 0
     ) }
     let(:mail) { BookMailer.with(book: book).book_pending_customer }
@@ -40,7 +40,7 @@ RSpec.describe BookMailer, type: :mailer do
     end
 
     it 'assigns @diners' do
-      expect(mail.body.encoded).to match(/Comensales: 1/)
+      expect(mail.body.encoded).to match(/Comensales: 2/)
     end
 
     it 'renders email closing text' do
@@ -53,7 +53,7 @@ RSpec.describe BookMailer, type: :mailer do
     let(:book) { Book.create!(
       email: "prueba1@gmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
-      diners: 1,
+      diners: 2,
       state: 0
     ) }
     let(:mail) { BookMailer.with(book: book).book_pending_admin }
@@ -88,7 +88,7 @@ RSpec.describe BookMailer, type: :mailer do
     end
 
     it 'assigns @diners' do
-      expect(mail.body.encoded).to match(/Comensales: 1/)
+      expect(mail.body.encoded).to match(/Comensales: 2/)
     end
 
     it 'renders email closing text' do

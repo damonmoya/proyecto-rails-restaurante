@@ -18,7 +18,7 @@ RSpec.describe "books/index", type: :view do
       Book.create!(
         email: "email3@hotmail.com",
         start_time: "2022-04-22 14:32:00 UTC",
-        diners: 1,
+        diners: 2,
         state: 1
       ),
       Book.create!(
@@ -46,7 +46,7 @@ RSpec.describe "books/index", type: :view do
     ###########################
     assert_select "tr>td", text: "email1@hotmail.com".to_s, count: 1
     assert_select "tr>td", text: "2021-04-22 14:32:00 UTC".to_s, count: 1
-    assert_select "tr>td", text: 2.to_s, count: 1
+    assert_select "tr>td", text: 2.to_s, count: 2
     ###########################
     assert_select "tr>td", text: "email2@gmail.com".to_s, count: 1
     assert_select "tr>td", text: "2021-05-30 14:32:00 UTC".to_s, count: 1
@@ -54,7 +54,6 @@ RSpec.describe "books/index", type: :view do
     ###########################
     assert_select "tr>td", text: "email3@hotmail.com".to_s, count: 1
     assert_select "tr>td", text: "2022-04-22 14:32:00 UTC".to_s, count: 1
-    assert_select "tr>td", text: 1.to_s, count: 1
     ###########################
     assert_select "tr>td", text: "email4@gmail.com".to_s, count: 1
     assert_select "tr>td", text: "2022-05-30 14:32:00 UTC".to_s, count: 1

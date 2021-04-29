@@ -24,7 +24,7 @@
 
   <div class="field">
     <%= form.label :diners, 'Comensales' %>
-    <%= form.number_field :diners %>
+    <%= form.number_field :diners, min: 2, max: 4, value: ( book.diners == nil ? 2 : book.diners ) %>
   </div>
 
   <% if form_type === "create" %>

@@ -5,7 +5,7 @@ RSpec.describe "books/edit", type: :view do
     @book = assign(:book, Book.create!(
       email: "email1@hotmail.com",
       start_time: "2021-04-22 14:32:00 UTC",
-      diners: 1,
+      diners: 2,
       state: 0
     ))
   end

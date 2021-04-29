@@ -8,7 +8,7 @@ class Book < ApplicationRecord
     validates :start_time, presence: { message: "No se ha seleccionado fecha y hora" }
     validates :diners, presence: { message: "No se ha introducido el número de comensales" }
     validates :diners, numericality: { only_integer: true, message: "No es un número" }, allow_nil: true
-    validates :diners, numericality: {greater_than: 0, message: "La reserva debe contar con mínimo un comensal"}, allow_nil: true
+    validates :diners, numericality: {greater_than: 1, message: "La reserva debe contar con mínimo dos comensales"}, allow_nil: true
     validates :diners, numericality: {less_than: 5, message: "La reserva solo permite un máximo de 4 comensales"}, allow_nil: true
     validates :state, inclusion: { in: states.keys }
     monetize :optional_charge_cents, allow_nil: true,
