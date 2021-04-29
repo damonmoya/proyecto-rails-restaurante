@@ -5,6 +5,8 @@
     no presentadas vinculadas a su correo.
 </p>
 
+<p id="error"><%= @notice %></p>
+
 <%= form_tag checkout_books_path do %>
 <%= hidden_field_tag "email", @email %>
 <%= hidden_field_tag "diners", @diners %>
@@ -23,6 +25,7 @@
     <span>Importe: <strong>5.00€</strong></span>
   </label>
 </article>
+<%= recaptcha_tags %>
 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
   data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
   data-label="Pagar cargo"

@@ -55,6 +55,7 @@ group :development, :test do
   gem 'selenium-webdriver'
 end
 
+gem "recaptcha"
 gem 'simplecov', require: false, group: :test
 gem 'money-rails', '~>1.12'
 gem 'stripe'

@@ -157,6 +157,31 @@ RSpec.describe "/books", type: :request do
       #expect(response).to be_successful
     end
 
+    it "invalid captcha" do
+      book1 = Book.create! valid_topay_attributes
+      post checkout_books_url, params: { 
+        email: valid_attributes[:email], 
+        diners: valid_attributes[:diners],
+        start_time_1i: "2021", 
+        start_time_2i: "05", 
+        start_time_3i: "30", 
+        start_time_4i: "14", 
+        start_time_5i: "32",
+        "g-recaptcha-response": ""
+      }
+      expect(response).to redirect_to(pay_books_path(
+        email: valid_attributes[:email], 
+        diners: valid_attributes[:diners],
+        start_time_1i: "2021", 
+        start_time_2i: "05", 
+        start_time_3i: "30", 
+        start_time_4i: "14", 
+        start_time_5i: "32",
+        notice: "No se ha validado el Captcha"
+      ))
+      #expect(response).to be_successful
+    end
+
   end
 
   describe "PATCH /update" do

@@ -1,6 +1,9 @@
 class BooksController < ApplicationController
+  require 'recaptcha.rb'
+
   rescue_from Stripe::CardError, with: :catch_exception
   before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :verify_pay_recaptcha, only: [:checkout]
 
   # GET /books or /books.json
   def index
@@ -28,6 +31,7 @@ class BooksController < ApplicationController
     @start_time_3i = params[:start_time_3i]
     @start_time_4i = params[:start_time_4i]
     @start_time_5i = params[:start_time_5i]
+    @notice = params[:notice]
   end
 
   def checkout
@@ -154,4 +158,23 @@ class BooksController < ApplicationController
     def catch_exception(exception)
       flash[:error] = exception.message
     end
+
+    def verify_pay_recaptcha
+      if params["g-recaptcha-response"] == ""
+        respond_to do |format|
+          format.html { redirect_to pay_books_path(
+            email: params[:email], 
+            diners: params[:diners],
+            start_time_1i: params[:start_time_1i], 
+            start_time_2i: params[:start_time_2i], 
+            start_time_3i: params[:start_time_3i], 
+            start_time_4i: params[:start_time_4i], 
+            start_time_5i: params[:start_time_5i],
+            notice: "No se ha validado el Captcha"
+          )}
+          format.json { render :pay, location: pay_books_path }
+        end
+      end
+    end
+
 end
