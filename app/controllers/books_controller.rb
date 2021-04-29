@@ -86,11 +86,6 @@ class BooksController < ApplicationController
     # Check if email is blacklisted
     @books = Book.all
     @blacklisted_books = Book.where(state: "no_show", email: book_params[:email])
-
-    # if @blacklisted_books.count > 0 
-    #   @new_book.state = "to_pay"
-    #   @new_book.charge = Money.new(500, "EUR")
-    # end
     
     respond_to do |format|
       if @blacklisted_books.count > 0 
@@ -112,10 +107,11 @@ class BooksController < ApplicationController
           BookMailer.with(book: @book).book_pending_admin.deliver_now
           format.html { redirect_to @book, notice: "Reserva realizada." }
           format.json { render :show, status: :created, location: @book }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @book.errors, status: :unprocessable_entity }
         end
       end
-      format.html { render :new, status: :unprocessable_entity }
-      format.json { render json: @book.errors, status: :unprocessable_entity }
     end
   end
 

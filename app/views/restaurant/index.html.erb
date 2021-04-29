@@ -1,9 +1,19 @@
-<h1>Mi restaurante</h1>
+<div>
+    <h1>Mi restaurante</h1>
 
-<div>Bienvenid@ a "Mi restaurante"</div>
+    <div>Bienvenid@ a "Mi restaurante"</div>
+</div>
 
-<br>
+<hr>
 
 <div>
-    <%= link_to "Sección de reservas", books_path %>
+    <h1>Nueva reserva</h1>
+
+    <%= render 'form', book: @book, button_name: "Reservar", form_type: "create" %>
 </div>
+
+<hr>
+
+<p>
+    <%= link_to "Sección de reservas", books_path %>
+</p>

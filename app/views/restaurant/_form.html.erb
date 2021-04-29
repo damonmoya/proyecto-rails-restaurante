@@ -1,0 +1,46 @@
+<%= form_with(url: restaurant_index_path, local: true) do |form| %>
+  <% if book.errors.any? %>
+    <div id="error_explanation">
+    <h2>No se ha podido realizar la reserva</h2>
+      <ul>
+        <% book.errors.messages.values.each do |message| %>
+          <%message.each do |msg| %>
+            <li><%= msg %></li>
+          <%end %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email, 'Email' %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_time, 'Fecha y Hora' %>
+    <%= form.datetime_select :start_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :diners, 'Comensales' %>
+    <%= form.number_field :diners, min: 2, max: 4, value: ( book.diners == nil ? 2 : book.diners ) %>
+  </div>
+
+  <% if form_type === "create" %>
+    <%= form.hidden_field :state, value: :pending %>
+  <% elsif form_type === "edit" %>
+    <% if book.state === :confirmed %>
+      <%= form.hidden_field :state, value: :confirmed %>
+    <% else %>
+      <div class="field">
+        <%= form.label :state, 'Estado de la reserva' %>
+        <%= form.select :state, [["Pendiente", Book.states.key(0)], ["Confirmada", Book.states.key(1)], ["No presentada", Book.states.key(2)]] %>      
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit button_name %>
+  </div>
+<% end %>

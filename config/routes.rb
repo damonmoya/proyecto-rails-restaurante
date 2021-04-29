@@ -4,5 +4,6 @@ Rails.application.routes.draw do
     post 'checkout', on: :collection
   end
     get 'restaurant/index'
+    post 'restaurant/index' => 'restaurant#create'
     root to: 'restaurant#index'
 end
