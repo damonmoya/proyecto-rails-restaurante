@@ -5,10 +5,12 @@ class BooksController < ApplicationController
   rescue_from Stripe::CardError, with: :catch_exception
   before_action :set_book, only: %i[ show edit update destroy ]
   before_action :verify_pay_recaptcha, only: [:checkout]
+  helper_method :sort_column, :sort_direction
 
   # GET /books or /books.json
   def index
-    @books = Book.all
+    order = sort_column + " " + sort_direction
+    @books = Book.order(order)
   end
 
   # GET /books/1 or /books/1.json
@@ -177,6 +179,14 @@ class BooksController < ApplicationController
           format.json { render :pay, location: pay_books_path }
         end
       end
+    end
+
+    def sort_column
+      params[:sort] || "email"
+    end
+
+    def sort_direction
+      params[:direction] || "asc"
     end
 
 end

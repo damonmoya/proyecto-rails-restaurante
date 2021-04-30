@@ -66,3 +66,16 @@ div.actions {
 
 label {
   display: block; }
+
+.pretty th .current {
+  padding-right: 12px;
+  background-position: right center;
+}
+  
+.pretty th .asc {
+  background-image: url(/public/imgs/arrow_up.jpg);
+}
+  
+.pretty th .desc {
+  background-image: url(/public/imgs/arrow_down.jpg);
+}
