@@ -144,4 +144,28 @@ RSpec.describe BookMailer, type: :mailer do
     end
 
   end
+
+  describe 'mybooks email' do
+    let(:email) { "prueba4@gmail.com" }
+    let(:url) { "http://localhost:3000/books/mybooks?email=ZGFtb245OUBob3RtYWlsLmVz" }
+    let(:mail) { BookMailer.with(email: email, url: url).mybooks }
+
+    it 'renders the subject' do
+      expect(mail.subject).to eq('Consulta de sus reservas')
+    end
+
+    it 'renders the receiver email' do
+      expect(mail.to).to eq([email])
+    end
+
+    it 'renders the sender email' do
+      expect(mail.from).to eq(['notificaciones.restauranterails@gmail.com'])
+    end
+
+    it 'renders email body headers' do
+      expect(mail.body.encoded).to match(/Saludos, querido usuario!/)
+      expect(mail.body.encoded).to match(/Puede consultar sus reservas haciendo clic en este enlace/)
+    end
+
+  end
 end

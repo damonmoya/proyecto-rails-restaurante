@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   require 'recaptcha.rb'
+  require 'base64'
 
   rescue_from Stripe::CardError, with: :catch_exception
   before_action :set_book, only: %i[ show edit update destroy ]
@@ -69,6 +70,11 @@ class BooksController < ApplicationController
 
     end
 
+  end
+
+  def mybooks
+    @email = Base64.decode64(params[:email])
+    @books = Book.where(email: @email)
   end
 
   # GET /books/new

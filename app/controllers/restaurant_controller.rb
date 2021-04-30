@@ -1,6 +1,21 @@
 class RestaurantController < ApplicationController
+  require 'base64'
+
   def index
     @book = Book.new
+  end
+
+  def getBooks
+    email = Base64.encode64(book_params[:email])
+    email.chomp!
+    url = request.base_url + "/books/mybooks?email=" + email
+
+    BookMailer.with(email: book_params[:email], url: url).mybooks.deliver_now
+
+    respond_to do |format|
+      format.html { redirect_to restaurant_index_path, notice: "¡Correo enviado!" }
+      format.json { render :index, location: restaurant_index_path }
+    end
   end
 
   def create

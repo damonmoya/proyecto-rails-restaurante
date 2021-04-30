@@ -1,0 +1,34 @@
+<h1>Reservas (<%= @email %>) </h1>
+
+<% if @books.count >= 1 %>
+  <table>
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Fecha y hora</th>
+        <th>Comensales</th>
+        <th>Estado</th>
+        <th>Cargo</th>
+        <th colspan="3">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td><%= book.email %></td>
+          <td><%= book.start_time %></td>
+          <td><%= book.diners %></td>
+          <td><%= state_book(book) %></td>
+          <td><%= charge_book(book) %></td>
+          <td><%= link_to 'Detalles', book %></td>
+          <td><%= link_to 'Editar', edit_book_path(book) %></td>
+          <td><%= link_to 'Eliminar', book, method: :delete, data: { confirm: '¿Eliminar reserva?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div>¡No hay reservas!</div>
+<% end %>
+
+<%= link_to 'Volver a sección de reservas', books_path %>

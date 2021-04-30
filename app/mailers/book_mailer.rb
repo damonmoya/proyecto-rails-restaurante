@@ -17,4 +17,10 @@ class BookMailer < ApplicationMailer
       @book = params[:book]
       mail(to: @book.email, subject: 'Reserva confirmada')
     end
+
+    def mybooks
+      @email = params[:email]
+      @url = params[:url]
+      mail(to: @email, subject: 'Consulta de sus reservas')
+    end
 end

@@ -17,4 +17,10 @@ class BookMailerPreview < ActionMailer::Preview
       book = Book.new(email: "email3@gmail.com", start_time: "2021-09-30 14:32:00 UTC", diners: 2, is_confirmed: false)
       BookMailer.with(book: book).book_pending_admin
     end
+
+    def mybook
+      @email = "email4@gmail.com"
+      @url = "http://localhost:3000/books/mybooks?email=ZGFtb245OUBob3RtYWlsLmVz"
+      BookMailer.with(email: @email, url: @url).mybook
+    end
 end

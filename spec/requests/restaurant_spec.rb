@@ -81,4 +81,14 @@ RSpec.describe "Restaurants", type: :request do
 
   end
 
+  describe "POST /mybooks" do
+
+    it "sends email" do
+      post restaurant_mybooks_url, params: { email: "prueba@gmail.com" }
+      expect(response).to redirect_to(restaurant_index_path)
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+    end
+
+  end
+
 end
