@@ -4,7 +4,7 @@
   <table>
     <thead>
       <tr>
-        <th>Email</th>
+        <th>ID reserva</th>
         <th>Fecha y hora</th>
         <th>Comensales</th>
         <th>Estado</th>
@@ -15,14 +15,16 @@
     <tbody>
       <% @books.each do |book| %>
         <tr>
-          <td><%= book.email %></td>
+          <td><%= book.id %></td>
           <td><%= book.start_time %></td>
           <td><%= book.diners %></td>
           <td><%= state_book(book) %></td>
           <td><%= charge_book(book) %></td>
-          <td><%= link_to 'Detalles', book %></td>
-          <td><%= link_to 'Editar', edit_book_path(book) %></td>
-          <td><%= link_to 'Eliminar', book, method: :delete, data: { confirm: '¿Eliminar reserva?' } %></td>
+          <% if ((book.start_time.to_i - @date_now)) >= @grace_time && book.charge == nil %>
+            <td><%= link_to 'Cancelar reserva', book, method: :delete, data: { confirm: 'Cancelar reserva?' } %></td>
+          <% else %>
+            <td>No hay acciones disponibles</td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

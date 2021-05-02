@@ -75,6 +75,8 @@ class BooksController < ApplicationController
   end
 
   def mybooks
+    @date_now = DateTime.now.utc.to_i
+    @grace_time = 3*(60*60*24)
     @email = Base64.decode64(params[:email])
     @books = Book.where(email: @email)
   end

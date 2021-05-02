@@ -28,7 +28,9 @@ RSpec.describe "books/mybooks", type: :view do
         state: 3,
         charge: Money.new(500, "EUR")
       )
-    ])
+    ]);
+    assign(:date_now, DateTime.now.utc.to_i);
+    assign(:grace_time, 3*(60*60*24));
   end
 
   it "renders a list of books" do
@@ -36,14 +38,12 @@ RSpec.describe "books/mybooks", type: :view do
     assert_select "table", count: 1
     assert_select "tr", count: 5
     ###########################
-    assert_select "tr>th", text: "Email".to_s, count: 1
     assert_select "tr>th", text: "Fecha y hora".to_s, count: 1
     assert_select "tr>th", text: "Comensales".to_s, count: 1
     assert_select "tr>th", text: "Estado".to_s, count: 1
     assert_select "tr>th", text: "Cargo".to_s, count: 1
     assert_select "tr>th", text: "Acciones".to_s, count: 1
     ###########################
-    assert_select "tr>td", text: "prueba@gmail.com".to_s, count: 4
     assert_select "tr>td", text: "2021-04-22 14:32:00 UTC".to_s, count: 1
     assert_select "tr>td", text: 2.to_s, count: 2
     ###########################
