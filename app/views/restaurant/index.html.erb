@@ -1,10 +1,6 @@
-<div>
-    <h1>Mi restaurante</h1>
-
-    <div>Bienvenid@ a "Mi restaurante"</div>
-</div>
-
-<hr>
+<% content_for :head do %>
+    <title>Mi restaurante - Página principal</title>
+<% end %>
 
 <div>
     <h1>Nueva reserva</h1>
@@ -21,9 +17,3 @@
 
     <%= render 'mybooksForm', button_name: "Enviar correo" %>
 </div>
-
-<hr>
-
-<p>
-    <%= link_to "Sección de reservas", books_path %>
-</p>

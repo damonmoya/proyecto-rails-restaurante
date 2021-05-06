@@ -83,3 +83,22 @@ label {
 }
 
 **/
+
+main > .container {
+  padding: 60px 0px 0;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+  background: #F37A1D;
+  color: white;
+} 
+
+.navbar-span {
+  color: white;
+}
