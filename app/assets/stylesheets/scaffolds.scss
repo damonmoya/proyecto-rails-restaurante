@@ -31,10 +31,6 @@ th {
 td {
   padding: 0 5px 7px; }
 
-div.field,
-div.actions {
-  margin-bottom: 10px; }
-
 #notice {
   color: green; }
 
@@ -101,4 +97,16 @@ main > .container {
 
 .navbar-span {
   color: white;
+}
+
+div.text-field, div.number-field, div.actions {
+  margin-bottom: 10px; 
+}
+
+div.text-field {
+  width: 30%;
+}
+
+div.number-field {
+  width: 5%;
 }

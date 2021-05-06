@@ -1,11 +1,10 @@
-<%= form_with(url: restaurant_mybooks_path, local: true) do |form| %>
+<%= bootstrap_form_with(url: restaurant_mybooks_path, local: true) do |form| %>
 
-  <div class="field">
-    <%= form.label :email, 'Email' %>
+  <div class="text-field">
     <%= form.email_field :email, :required => true%>
   </div>
 
   <div class="actions">
-    <%= form.submit button_name %>
+    <%= form.submit button_name, class: "btn btn-primary" %>
   </div>
 <% end %>

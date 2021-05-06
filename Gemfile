@@ -59,3 +59,5 @@ gem "recaptcha"
 gem 'simplecov', require: false, group: :test
 gem 'money-rails', '~>1.12'
 gem 'stripe'
+
+gem "bootstrap_form", "~> 4.0"
