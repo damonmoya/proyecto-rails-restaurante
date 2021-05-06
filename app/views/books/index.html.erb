@@ -3,8 +3,12 @@
 <h1>Reservas</h1>
 
 <% if @books.count >= 1 %>
-  <table class="pretty">
-    <thead>
+  <table class="pretty table">
+    <thead class="table-dark">
+      <div class="mt-2 mt-md-0 mb-3 d-flex justify-content-between">
+        <%= link_to 'Nueva reserva', new_book_path, class: 'btn btn-primary' %>
+        <%= link_to 'Volver a la Página Principal', root_path, class: 'btn btn-secondary' %>
+      </div>
       <tr>
         <th><%= sortable "email", "Email" %></th>
         <th><%= sortable "start_time", "Fecha y hora" %></th>
@@ -22,9 +26,21 @@
           <td><%= book.diners %></td>
           <td><%= state_book(book) %></td>
           <td><%= charge_book(book) %></td>
-          <td><%= link_to 'Detalles', book %></td>
-          <td><%= link_to 'Editar', edit_book_path(book) %></td>
-          <td><%= link_to 'Eliminar', book, method: :delete, data: { confirm: '¿Eliminar reserva?' } %></td>
+          <td>
+            <%= link_to book do %>
+              <span class='oi oi-eye' style="color:grey"></span>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to edit_book_path(book) do %>
+              <span class='oi oi-pencil'></span>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to book, method: :delete, data: { confirm: '¿Eliminar reserva?' } do %>
+              <span class='oi oi-trash' style="color:red"></span>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
@@ -32,8 +48,3 @@
 <% else %>
   <div>¡No hay reservas!</div>
 <% end %>
-
-<p>
-  <%= link_to 'Nueva reserva', new_book_path %> | 
-  <%= link_to 'Volver a la Página Principal', root_path %>
-</p>
