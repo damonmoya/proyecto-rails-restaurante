@@ -5,7 +5,9 @@
     no presentadas vinculadas a su correo.
 </p>
 
-<p id="error"><%= @notice %></p>
+<% if @notice != nil %>
+<p id="error" class="alert alert-danger"><%= @notice %></p>
+<% end %>
 
 <%= form_tag checkout_books_path do %>
 <%= hidden_field_tag "email", @email %>
@@ -25,7 +27,9 @@
     <span>Importe: <strong>5.00€</strong></span>
   </label>
 </article>
-<%= recaptcha_tags %>
+<div class="mt-3 mb-3">
+  <%= recaptcha_tags %>
+</div>
 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
   data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
   data-label="Pagar cargo"
@@ -42,5 +46,5 @@
 </script>
 
 <p>
-  <%= link_to 'Cancelar reserva', books_path, data: { confirm: '¿Cancelar reserva?' } %>
+  <%= link_to 'Cancelar reserva', books_path, data: { confirm: '¿Cancelar reserva?' }, class:"btn btn-danger mt-4" %>
 </p>

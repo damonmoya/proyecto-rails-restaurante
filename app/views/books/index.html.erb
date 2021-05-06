@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <div id="notice" class="alert alert-success">
+      <%= notice %>
+  </div>
+<% end %>
 
 <h1>Reservas</h1>
 

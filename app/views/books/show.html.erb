@@ -1,6 +1,10 @@
-<h1>Detalles de reserva <%= @book.id %></h1>
+<h1>Detalles de reserva (ID #<%= @book.id %>)</h1>
 
-<p id="notice"><%= notice %></p>
+<% if notice != nil %>
+  <div id="notice" class="alert alert-success">
+      <%= notice %>
+  </div>
+<% end %>
 
 <p>
   <strong>Email:</strong>
@@ -27,5 +31,5 @@
   <%= charge_book(@book) %>
 </p>
 
-<%= link_to 'Editar reserva', edit_book_path(@book) %> |
-<%= link_to 'Volver a sección de reservas', books_path %>
+<%= link_to 'Editar reserva', edit_book_path(@book), class: "btn btn-primary" %> 
+<%= link_to 'Volver a sección de reservas', books_path, class: "btn btn-secondary" %>
