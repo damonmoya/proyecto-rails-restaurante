@@ -10,7 +10,7 @@ class BooksController < ApplicationController
   # GET /books or /books.json
   def index
     order = sort_column + " " + sort_direction
-    @books = Book.order(order)
+    @books = Book.paginate(page: params[:page], per_page: 10).order(order)
   end
 
   # GET /books/1 or /books/1.json
@@ -78,7 +78,8 @@ class BooksController < ApplicationController
     @date_now = DateTime.now.utc.to_i
     @grace_time = 3*(60*60*24)
     @email = Base64.decode64(params[:email])
-    @books = Book.where(email: @email)
+    order = sort_column + " " + sort_direction
+    @books = Book.paginate(page: params[:page], per_page: 10).where(email: @email).order(order)
   end
 
   # GET /books/new

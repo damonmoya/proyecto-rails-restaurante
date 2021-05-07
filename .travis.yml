@@ -23,4 +23,4 @@ deploy:
     repo: damonmoya/proyecto-rails-restaurante
   run:
     - "rake db:migrate"
-    - "rake db:seed"
+    - "rake db:seed:replant"

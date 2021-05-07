@@ -11,6 +11,9 @@
     <thead class="table-dark">
       <div class="mt-2 mt-md-0 mb-3 d-flex justify-content-between">
         <%= link_to 'Nueva reserva', new_book_path, class: 'btn btn-primary' %>
+        <div class="flickr_pagination">
+          <%= will_paginate @books %>
+        </div>
         <%= link_to 'Volver a la Página Principal', root_path, class: 'btn btn-secondary' %>
       </div>
       <tr>

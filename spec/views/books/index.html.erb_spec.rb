@@ -32,6 +32,7 @@ RSpec.describe "books/index", type: :view do
   end
 
   it "renders a list of books" do
+    allow(view).to receive_messages(:will_paginate => nil)
     render
     assert_select "h1", text: "Reservas".to_s
     assert_select "table", count: 1

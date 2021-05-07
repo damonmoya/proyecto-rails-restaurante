@@ -34,6 +34,7 @@ RSpec.describe "books/mybooks", type: :view do
   end
 
   it "renders a list of books" do
+    allow(view).to receive_messages(:will_paginate => nil)
     render
     assert_select "table", count: 1
     assert_select "tr", count: 5
