@@ -10,7 +10,11 @@ class BooksController < ApplicationController
   # GET /books or /books.json
   def index
     order = sort_column + " " + sort_direction
-    @books = Book.paginate(page: params[:page], per_page: 10).order(order)
+    if (params[:search] == nil)
+      @books = Book.paginate(page: params[:page], per_page: 10).order(order)
+    else 
+      @books = Book.paginate(page: params[:page], per_page: 10).where("email LIKE ?", "%#{params[:search]}%").order(order)
+    end
   end
 
   # GET /books/1 or /books/1.json

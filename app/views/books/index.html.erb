@@ -6,16 +6,20 @@
 
 <h1>Reservas</h1>
 
+<%= form_tag books_path, :method => "get", :class => "form-inline mb-4" do %>
+  <div class="row">
+    <div class="col-4">
+      <%= text_field_tag :search, params[:search], class: 'form-control' %>
+    </div>
+    <div class="col-2">
+      <%= submit_tag("Buscar", :name => nil, class: "btn btn-primary") %>
+    </div>
+  </div>
+<% end %>
+
 <% if @books.count >= 1 %>
   <table class="pretty table">
-    <thead class="table-dark">
-      <div class="mt-2 mt-md-0 mb-3 d-flex justify-content-between">
-        <%= link_to 'Nueva reserva', new_book_path, class: 'btn btn-primary' %>
-        <div class="flickr_pagination">
-          <%= will_paginate @books %>
-        </div>
-        <%= link_to 'Volver a la Página Principal', root_path, class: 'btn btn-secondary' %>
-      </div>
+    <thead class="table-dark">     
       <tr>
         <th><%= sortable "email", "Email" %></th>
         <th><%= sortable "start_time", "Fecha y hora" %></th>
@@ -52,6 +56,16 @@
       <% end %>
     </tbody>
   </table>
+  <div class="mt-2 mt-md-0 mb-3 d-flex justify-content-center">
+    <div class="flickr_pagination">
+      <%= will_paginate @books %>
+    </div>
+  </div>
 <% else %>
   <div>¡No hay reservas!</div>
 <% end %>
+
+<div class="mt-2 mt-md-0 mb-3 d-flex justify-content-between">
+  <%= link_to 'Nueva reserva', new_book_path, class: 'btn btn-primary' %>
+  <%= link_to 'Volver a la Página Principal', root_path, class: 'btn btn-secondary' %>
+</div>
