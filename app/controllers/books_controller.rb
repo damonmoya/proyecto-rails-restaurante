@@ -1,6 +1,5 @@
 class BooksController < ApplicationController
   require 'recaptcha.rb'
-  require 'base64'
 
   rescue_from Stripe::CardError, with: :catch_exception
   before_action :set_book, only: %i[ show edit update destroy ]
@@ -80,10 +79,25 @@ class BooksController < ApplicationController
 
   def mybooks
     @date_now = DateTime.now.utc.to_i
-    @grace_time = 3*(60*60*24)
-    @email = Base64.decode64(params[:email])
-    order = sort_column + " " + sort_direction
-    @books = Book.paginate(page: params[:page], per_page: 10).where(email: @email).order(order)
+
+    @check = Check.find_by token: params[:token]
+    if @check != nil
+      if ((@check.expire_time.to_i - @date_now)) < 0
+        respond_to do |format|
+          format.html { redirect_to restaurant_index_path, notice: "La solicitud ha expirado" }
+          format.json { render :index, location: restaurant_index_path }
+        end
+      end
+      @email = @check.email
+      @grace_time = 3*(60*60*24)
+      order = sort_column + " " + sort_direction
+      @books = Book.paginate(page: params[:page], per_page: 10).where(email: @email).order(order)
+    else 
+      respond_to do |format|
+        format.html { redirect_to restaurant_index_path, notice: "Ninguna solicitud encontrada" }
+        format.json { render :index, location: restaurant_index_path }
+      end
+    end
   end
 
   # GET /books/new

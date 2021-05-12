@@ -21,6 +21,18 @@ RSpec.describe "/books", type: :request do
     {email: "prueba@gmail.com", start_time: "2021-05-30 14:32:00 UTC", diners: 2, state: "pending"}
   }
 
+  let(:valid_check_attributes) {
+    {email: "prueba@gmail.com", expire_time: (DateTime.now + (1.0/48))}
+  }
+
+  let(:valid_expired_check_attributes) {
+    {email: "prueba@gmail.com", expire_time: (DateTime.now - 1)}
+  }
+
+  let(:random_token) {
+    Digest::SHA1.hexdigest([Time.now, rand].join)
+  }
+
   let(:valid_noshow_attributes) {
     {email: "prueba@gmail.com", start_time: "2021-05-30 14:32:00 UTC", diners: 2, state: "no_show"}
   }
@@ -39,14 +51,27 @@ RSpec.describe "/books", type: :request do
       get books_url
       expect(response).to be_successful
     end
+    it "renders a successful response v2" do
+      Book.create! valid_attributes
+      get books_url, params: { search: "something" }
+      expect(response).to be_successful
+    end
   end
 
   describe "GET /mybooks" do
     it "renders a successful response" do
-      email = Base64.encode64("prueba@gmail.com")
-      email.chomp!
-      get mybooks_books_url, params: { email: email }
+      check = Check.create! valid_check_attributes
+      get mybooks_books_url, params: { token: check.token }
       expect(response).to be_successful
+    end
+    it "redirects to home (expired link)" do 
+      check = Check.create! valid_expired_check_attributes
+      get mybooks_books_url, params: { token: check.token }
+      expect(response).to redirect_to(restaurant_index_path)
+    end
+    it "redirects to home (invalid token)" do
+      get mybooks_books_url, params: { token: random_token }
+      expect(response).to redirect_to(restaurant_index_path)
     end
   end
 

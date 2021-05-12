@@ -1,19 +1,20 @@
 class RestaurantController < ApplicationController
-  require 'base64'
 
   def index
     @book = Book.new
   end
 
   def getBooks
-    email = Base64.encode64(book_params[:email])
-    email.chomp!
-    url = request.base_url + "/books/mybooks?email=" + email
+
+    @check = Check.new(email: book_params[:email], expire_time: (DateTime.now + (1.0/48)))
+    @check.save 
+
+    url = request.base_url + "/books/mybooks?token=" + @check.token
 
     BookMailer.with(email: book_params[:email], url: url).mybooks.deliver_now
 
     respond_to do |format|
-      format.html { redirect_to restaurant_index_path, notice: "¡Correo enviado!" }
+      format.html { redirect_to restaurant_index_path, notice: "¡Correo con enlace enviado! El enlace es válido durante los próximos 30 minutos" }
       format.json { render :index, location: restaurant_index_path }
     end
   end
