@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :admins
   resources :books do
     get 'pay', on: :collection
     post 'checkout', on: :collection

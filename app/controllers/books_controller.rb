@@ -4,6 +4,7 @@ class BooksController < ApplicationController
   rescue_from Stripe::CardError, with: :catch_exception
   before_action :set_book, only: %i[ show edit update destroy ]
   before_action :verify_pay_recaptcha, only: [:checkout]
+  before_action :authenticate_admin!, except: [:show, :pay, :checkout, :mybooks, :new, :create]
   helper_method :sort_column, :sort_direction
 
   # GET /books or /books.json
