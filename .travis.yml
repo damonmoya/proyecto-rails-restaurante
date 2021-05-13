@@ -23,4 +23,4 @@ deploy:
     repo: damonmoya/proyecto-rails-restaurante
   run:
     - "rake db:migrate"
-    - "rake db:seed:replant"
+    - "rake db:seed:replant DISABLE_DATABASE_ENVIRONMENT_CHECK=1"
