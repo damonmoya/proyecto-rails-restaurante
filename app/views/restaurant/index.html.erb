@@ -2,6 +2,8 @@
     <title>Mi restaurante - Página principal</title>
 <% end %>
 
+<%= render 'layouts/notifications' %>
+
 <div>
     <h1>Nueva reserva</h1>
 
@@ -12,18 +14,6 @@
 
 <div>
     <h1>Consultar reservas</h1>
-
-    <% if notice != nil %>
-        <div id="notice" class="alert alert-success">
-            <%= notice %>
-        </div>
-    <% end %>
-
-    <% if alert != nil %>
-        <div id="alert" class="alert alert-danger">
-            <%= alert %>
-        </div>
-    <% end %>
 
     <%= render 'mybooksForm', button_name: "Enviar correo" %>
 </div>

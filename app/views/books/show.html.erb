@@ -31,5 +31,9 @@
   <%= charge_book(@book) %>
 </p>
 
-<%= link_to 'Editar reserva', edit_book_path(@book), class: "btn btn-primary" %> 
-<%= link_to 'Volver a sección de reservas', books_path, class: "btn btn-secondary" %>
+<% if signed_in? %>
+  <%= link_to 'Editar reserva', edit_book_path(@book), class: "btn btn-primary" %> 
+  <%= link_to 'Volver a sección de reservas', books_path, class: "btn btn-secondary" %>
+<% else %> 
+  <%= link_to 'Volver', root_path, class: "btn btn-primary" %>
+<% end %>
