@@ -1,6 +1,12 @@
 <% if notice != nil %>
   <div id="notice" class="alert alert-success">
-      <%= notice %>
+    <%= notice %>
+  </div>
+<% end %>
+
+<% if alert != nil %>
+  <div id="alert" class="alert alert-danger">
+    <%= alert %>
   </div>
 <% end %>
 

@@ -6,6 +6,17 @@ class RestaurantController < ApplicationController
 
   def getBooks
 
+    books = Book.where(email: book_params[:email])
+
+    if books.count == 0 
+      msg = "¡No hay reservas correspondientes a " + book_params[:email] + "!"
+      respond_to do |format|
+        format.html { redirect_to restaurant_index_path, alert: msg }
+        format.json { render :index, location: restaurant_index_path }
+      end
+      return
+    end
+
     @check = Check.new(email: book_params[:email], expire_time: (DateTime.now + (1.0/48)))
     @check.save 
 
@@ -13,8 +24,10 @@ class RestaurantController < ApplicationController
 
     BookMailer.with(email: book_params[:email], url: url).mybooks.deliver_now
 
+    msg = "¡Correo con enlace enviado a " + book_params[:email] + "! El enlace es válido durante los próximos 30 minutos"
+
     respond_to do |format|
-      format.html { redirect_to restaurant_index_path, notice: "¡Correo con enlace enviado! El enlace es válido durante los próximos 30 minutos" }
+      format.html { redirect_to restaurant_index_path, notice: msg }
       format.json { render :index, location: restaurant_index_path }
     end
   end

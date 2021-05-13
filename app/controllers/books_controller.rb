@@ -84,7 +84,7 @@ class BooksController < ApplicationController
     if @check != nil
       if ((@check.expire_time.to_i - @date_now)) < 0
         respond_to do |format|
-          format.html { redirect_to restaurant_index_path, notice: "La solicitud ha expirado" }
+          format.html { redirect_to restaurant_index_path, alert: "La solicitud ha expirado" }
           format.json { render :index, location: restaurant_index_path }
         end
       end
@@ -94,7 +94,7 @@ class BooksController < ApplicationController
       @books = Book.paginate(page: params[:page], per_page: 10).where(email: @email).order(order)
     else 
       respond_to do |format|
-        format.html { redirect_to restaurant_index_path, notice: "Ninguna solicitud encontrada" }
+        format.html { redirect_to restaurant_index_path, alert: "Ninguna solicitud encontrada" }
         format.json { render :index, location: restaurant_index_path }
       end
     end
@@ -164,7 +164,7 @@ class BooksController < ApplicationController
   def destroy
     @book.destroy
     respond_to do |format|
-      format.html { redirect_to books_url, notice: "Reserva eliminada." }
+      format.html { redirect_to books_url, alert: "Reserva eliminada." }
       format.json { head :no_content }
     end
   end

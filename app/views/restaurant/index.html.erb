@@ -14,15 +14,15 @@
     <h1>Consultar reservas</h1>
 
     <% if notice != nil %>
-        <% if notice == "La solicitud ha expirado" || notice == "Ninguna solicitud encontrada" %>
-            <div id="notice" class="alert alert-danger">
-                <%= notice %>
-            </div>
-        <% else %>
-            <div id="notice" class="alert alert-success">
-                <%= notice %>
-            </div>
-        <% end %>
+        <div id="notice" class="alert alert-success">
+            <%= notice %>
+        </div>
+    <% end %>
+
+    <% if alert != nil %>
+        <div id="alert" class="alert alert-danger">
+            <%= alert %>
+        </div>
     <% end %>
 
     <%= render 'mybooksForm', button_name: "Enviar correo" %>
