@@ -27,9 +27,11 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="<%= root_path %>">Inicio</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="<%= books_path %>">Sección de reservas</a>
-              </li>
+              <% if signed_in? %>
+                <li class="nav-item">
+                  <a class="nav-link" href="<%= books_path %>">Sección de reservas</a>
+                </li>
+              <% end %>
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <% if signed_in? %>
