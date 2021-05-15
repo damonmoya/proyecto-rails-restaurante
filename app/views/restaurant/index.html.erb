@@ -4,16 +4,32 @@
 
 <%= render 'layouts/notifications' %>
 
-<div>
-    <h1>Nueva reserva</h1>
+<div style="min-height: 450px;">
+    <div id="newBookForm" style="display: block">
+        <%= render 'form', book: @book, button_name: "Reservar", form_type: "create" %>
+    </div>
 
-    <%= render 'form', book: @book, button_name: "Reservar", form_type: "create" %>
+    <div id="myBooksForm" style="display: none">
+        <%= render 'mybooksForm', button_name: "Enviar correo" %>
+    </div>
 </div>
 
 <hr>
 
-<div>
-    <h1>Consultar reservas</h1>
+<button class="btn btn-success" style="color: white" onclick="swapForms()">Consultar reservas</button>
 
-    <%= render 'mybooksForm', button_name: "Enviar correo" %>
-</div>
+<script>
+
+    function swapForms() {
+        var x = document.getElementById("newBookForm")
+        var y = document.getElementById("myBooksForm")
+        if (x.style.display === "none") {
+          x.style.display = "block";
+          y.style.display = "none";
+        } else {
+          x.style.display = "none";
+          y.style.display = "block";
+        }
+    } 
+
+</script>

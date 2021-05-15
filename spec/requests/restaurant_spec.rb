@@ -83,8 +83,15 @@ RSpec.describe "Restaurants", type: :request do
 
   describe "POST /mybooks" do
 
-    it "does not send email" do
+    it "does not found any books" do
       post restaurant_mybooks_url, params: { email: "prueba@gmail.com" }
+      expect(response).to redirect_to(restaurant_index_path)
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
+    end
+
+    it "invalid captcha" do
+      book = Book.create! valid_attributes
+      post restaurant_mybooks_url, params: { email: "prueba@gmail.com", "g-recaptcha-response": "" }
       expect(response).to redirect_to(restaurant_index_path)
       expect(ActionMailer::Base.deliveries.count).to eq(0)
     end

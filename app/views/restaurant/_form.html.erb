@@ -1,3 +1,5 @@
+<h1>Nueva reserva</h1>
+
 <%= bootstrap_form_with(url: restaurant_index_path, local: true) do |form| %>
   <% if book.errors.any? %>
     <div id="error_explanation">
@@ -25,6 +27,10 @@
   </div>
 
   <%= form.hidden_field :state, value: :pending %>
+
+  <div class="mt-3 mb-3">
+      <%= recaptcha_tags %>
+  </div>
 
   <div class="actions">
     <%= form.submit button_name, class: "btn btn-primary" %>

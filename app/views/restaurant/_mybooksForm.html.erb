@@ -1,7 +1,13 @@
+<h1>Consultar reservas</h1>
+
 <%= bootstrap_form_with(url: restaurant_mybooks_path, local: true) do |form| %>
 
   <div class="text-field">
     <%= form.email_field :email, :required => true%>
+  </div>
+
+  <div class="mt-3 mb-3">
+      <%= recaptcha_tags %>
   </div>
 
   <div class="actions">

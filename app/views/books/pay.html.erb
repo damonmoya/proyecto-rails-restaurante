@@ -9,9 +9,7 @@
     no presentadas vinculadas a su correo.
 </p>
 
-<% if @notice != nil %>
-<p id="error" class="alert alert-danger"><%= @notice %></p>
-<% end %>
+<%= render 'layouts/notifications' %>
 
 <%= form_tag checkout_books_path do %>
 <%= hidden_field_tag "email", @email %>

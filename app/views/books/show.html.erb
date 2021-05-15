@@ -2,13 +2,9 @@
     <title>Mi restaurante - Detalle de reserva (<%= @book.id %>)</title>
 <% end %>
 
-<h1>Detalles de reserva (ID #<%= @book.id %>)</h1>
+<%= render 'layouts/notifications' %>
 
-<% if notice != nil %>
-  <div id="notice" class="alert alert-success">
-      <%= notice %>
-  </div>
-<% end %>
+<h1>Detalles de reserva (ID #<%= @book.id %>)</h1>
 
 <p>
   <strong>Email:</strong>

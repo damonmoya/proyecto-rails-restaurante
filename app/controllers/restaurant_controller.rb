@@ -1,4 +1,7 @@
 class RestaurantController < ApplicationController
+  require 'recaptcha.rb'
+
+  before_action :verify_recaptcha, only: [:getBooks, :create]
 
   def index
     @book = Book.new
@@ -70,6 +73,15 @@ class RestaurantController < ApplicationController
     # Only allow a list of trusted parameters through.
     def book_params
       params.permit(:email, :start_time, :diners, :state, :charge)
+    end
+
+    def verify_recaptcha
+      if params["g-recaptcha-response"] == ""
+        respond_to do |format|
+          format.html { redirect_to restaurant_index_path, alert: "No se ha validado el Captcha" }
+          format.json { render :index, location: restaurant_index_path }
+        end
+      end
     end
 
 end
