@@ -29,8 +29,8 @@
           <td><%= book.diners %></td>
           <td><%= state_book(book) %></td>
           <td><%= charge_book(book) %></td>
-          <% if ((book.start_time.to_i - @date_now)) >= @grace_time && book.charge == nil %>
-            <td><%= link_to 'Cancelar reserva', book, method: :delete, data: { confirm: 'Cancelar reserva?' } %></td>
+          <% if ((book.start_time.to_i - @date_now)) >= @grace_time && book.charge == nil && book.state == "confirmed" %>
+            <td><%= link_to "Cancelar reserva", cancel_book_path(:token => @token, :id => book), class:"btn btn-danger" , data: { confirm: '¿Cancelar reserva?' } %></td>
           <% else %>
             <td>No hay acciones disponibles</td>
           <% end %>
@@ -42,4 +42,4 @@
   <div>¡No hay reservas!</div>
 <% end %>
 
-<%= link_to 'Volver a sección de reservas', books_path, class: "btn btn-secondary" %>
+<%= link_to 'Volver a la página principal', root_path, class: "btn btn-secondary" %>

@@ -284,4 +284,25 @@ RSpec.describe "/books", type: :request do
       expect(response).to redirect_to(books_url)
     end
   end
+
+  describe "get /cancel" do
+    
+    it "destroys the requested book" do
+      book = Book.create! valid_attributes
+      check = Check.new(email: book.email, expire_time: (DateTime.now + (1.0/48)))
+      check.save
+      expect {
+        get cancel_book_path(:token => check.token, :id => book)
+      }.to change(Book, :count).by(-1)
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+    end
+
+    it "redirects to root" do
+      book = Book.create! valid_attributes
+      check = Check.new(email: book.email, expire_time: (DateTime.now + (1.0/48)))
+      check.save
+      get cancel_book_path(:token => check.token, :id => book)
+      expect(response).to redirect_to(root_url)
+    end
+  end
 end

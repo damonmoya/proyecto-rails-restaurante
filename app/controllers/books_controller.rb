@@ -4,7 +4,7 @@ class BooksController < ApplicationController
   rescue_from Stripe::CardError, with: :catch_exception
   before_action :set_book, only: %i[ show edit update destroy ]
   before_action :verify_pay_recaptcha, only: [:checkout]
-  before_action :authenticate_admin!, except: [:show, :pay, :checkout, :mybooks, :new, :create]
+  before_action :authenticate_admin!, except: [:show, :pay, :checkout, :mybooks, :new, :create, :cancel]
   helper_method :sort_column, :sort_direction
 
   # GET /books or /books.json
@@ -89,6 +89,7 @@ class BooksController < ApplicationController
           format.json { render :index, location: restaurant_index_path }
         end
       end
+      @token = params[:token]
       @email = @check.email
       @grace_time = 3*(60*60*24)
       order = sort_column + " " + sort_direction
@@ -168,6 +169,19 @@ class BooksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to books_url, alert: "Reserva eliminada." }
       format.json { head :no_content }
+    end
+  end
+
+  def cancel
+    check = Check.find_by token: params[:token]
+    book = Book.find(params[:id])
+    if check.email == book.email
+      BookMailer.with(book: book).cancelled_book.deliver_now
+      book.destroy
+      respond_to do |format|
+        format.html { redirect_to root_url, alert: "Reserva cancelada." }
+        format.json { head :no_content }
+      end
     end
   end
 
