@@ -1,3 +1,7 @@
 schedule.every('1d') do
   `rake emails:send_reminder`
 end
+
+schedule.every('5m') do
+  puts "test"
+end

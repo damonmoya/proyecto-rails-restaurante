@@ -2,5 +2,8 @@
 
 <%= render 'form', book: @book, button_name: "Actualizar", form_type: "edit" %>
 
-<%= link_to 'Detalles', @book %> |
-<%= link_to 'Volver a sección de reservas', books_path %>
+<hr>
+
+<p>
+    <%= link_to 'Volver a sección de reservas', books_path, class: "btn btn-secondary" %>
+</p>
