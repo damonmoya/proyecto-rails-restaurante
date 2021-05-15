@@ -275,6 +275,7 @@ RSpec.describe "/books", type: :request do
       expect {
         delete book_url(book)
       }.to change(Book, :count).by(-1)
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
     end
 
     it "redirects to the books list" do

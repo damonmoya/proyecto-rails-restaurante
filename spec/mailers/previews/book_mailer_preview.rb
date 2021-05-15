@@ -28,4 +28,9 @@ class BookMailerPreview < ActionMailer::Preview
       book = Book.new(email: "email5@gmail.com", start_time: "2021-09-30 14:32:00 UTC", diners: 2, state: "confirmed")
       BookMailer.with(book: book).reminder_book
     end
+
+    def cancelled_book
+      book = Book.new(email: "email5@gmail.com", start_time: "2021-09-30 14:32:00 UTC", diners: 2, state: "confirmed")
+      BookMailer.with(book: book).cancelled_book
+    end
 end

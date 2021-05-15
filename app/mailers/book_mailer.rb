@@ -28,4 +28,9 @@ class BookMailer < ApplicationMailer
       @book = params[:book]
       mail(to: @book.email, subject: 'Recordatorio de reserva')
     end
+
+    def cancelled_book
+      @book = params[:book]
+      mail(to: @book.email, subject: 'Reserva cancelada')
+    end
 end

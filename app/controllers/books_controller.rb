@@ -163,6 +163,7 @@ class BooksController < ApplicationController
 
   # DELETE /books/1 or /books/1.json
   def destroy
+    BookMailer.with(book: @book).cancelled_book.deliver_now
     @book.destroy
     respond_to do |format|
       format.html { redirect_to books_url, alert: "Reserva eliminada." }
