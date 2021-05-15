@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Este correo se le ha enviado para recordarle que tiene una reserva para dentro de tres días.</h1>
+    <h2>Estos son los datos de la reserva:</h2>
+    <p>
+      <b>Email:</b> <%= @book.email %>
+    </p>
+    <p>
+      <b>Fecha y Hora:</b> <%= @book.start_time %>
+    </p>
+    <p>
+      <b>Comensales:</b> <%= @book.diners %>
+    </p>
+    <p>Le esperamos en nuestro restaurante.</p>
+  </body>
+</html>

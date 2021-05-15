@@ -168,4 +168,49 @@ RSpec.describe BookMailer, type: :mailer do
     end
 
   end
+
+  describe 'reminder email' do
+    let(:book) { Book.create!(
+      email: "prueba1@gmail.com",
+      start_time: DateTime.now + 3,
+      diners: 2,
+      state: 1
+    ) }
+    let(:mail) { BookMailer.with(book: book).reminder_book }
+
+    it 'receives pending book' do
+      expect(book.state).to eq("confirmed")
+    end
+
+    it 'renders the subject' do
+      expect(mail.subject).to eq('Recordatorio de reserva')
+    end
+
+    #it 'renders the receiver email' do
+    #  expect(mail.to).to eq([@admin_email])
+    #end
+
+    it 'renders the sender email' do
+      expect(mail.from).to eq(['notificaciones.restauranterails@gmail.com'])
+    end
+
+    it 'renders email body headers' do
+      expect(mail.body.encoded).to match(/Estos son los datos de la reserva:/)
+    end
+
+    it 'assigns @email' do
+      expect(mail.body.encoded).to match(/Email: prueba1@gmail.com/)
+    end
+
+    it 'assigns @diners' do
+      expect(mail.body.encoded).to match(/Comensales: 2/)
+    end
+
+    it 'renders email closing text' do
+      expect(mail.body.encoded).to match(/Le esperamos en nuestro restaurante./)
+    end
+
+  end
+
+  
 end

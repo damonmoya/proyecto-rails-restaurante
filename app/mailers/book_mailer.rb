@@ -23,4 +23,9 @@ class BookMailer < ApplicationMailer
       @url = params[:url]
       mail(to: @email, subject: 'Consulta de sus reservas')
     end
+
+    def reminder_book
+      @book = params[:book]
+      mail(to: @book.email, subject: 'Recordatorio de reserva')
+    end
 end
