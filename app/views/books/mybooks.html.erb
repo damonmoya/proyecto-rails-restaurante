@@ -1,3 +1,7 @@
+<% content_for :head do %>
+    <title>Mi restaurante - Reservas de <%= @email %></title>
+<% end %>
+
 <h1>Reservas (<%= @email %>) </h1>
 
 <% if @books.count >= 1 %>

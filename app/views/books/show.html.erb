@@ -1,3 +1,7 @@
+<% content_for :head do %>
+    <title>Mi restaurante - Detalle de reserva (<%= @book.id %>)</title>
+<% end %>
+
 <h1>Detalles de reserva (ID #<%= @book.id %>)</h1>
 
 <% if notice != nil %>
