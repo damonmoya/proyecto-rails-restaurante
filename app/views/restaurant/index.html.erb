@@ -16,7 +16,7 @@
 
 <hr>
 
-<button class="btn btn-success" style="color: white" onclick="swapForms()">Consultar reservas</button>
+<button class="btn btn-success" id="swapBtn" style="color: white" onclick="swapForms()">Consultar reservas</button>
 
 <script>
 
@@ -30,6 +30,8 @@
           x.style.display = "none";
           y.style.display = "block";
         }
+        var swapBtn = document.getElementById("swapBtn");
+        swapBtn.innerHTML = (swapBtn.innerHTML == 'Consultar reservas') ? 'Nueva reserva' : 'Consultar reservas' ;
     } 
 
 </script>
