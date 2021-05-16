@@ -66,7 +66,7 @@ RSpec.describe "books/mybooks", type: :view do
   end
 end
 
-RSpec.describe "books/index", type: :view do
+RSpec.describe "books/mybooks", type: :view do
   before(:each) do
     assign(:books, [])
   end

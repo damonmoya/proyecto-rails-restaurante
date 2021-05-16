@@ -2,6 +2,33 @@ require 'rails_helper'
 
 RSpec.describe "books/index", type: :view do
   before(:each) do
+    assign(:books_all, [
+      Book.create!(
+        email: "email1@hotmail.com",
+        start_time: "2021-04-22 14:32:00 UTC",
+        diners: 2,
+        state: 0
+      ),
+      Book.create!(
+        email: "email2@gmail.com",
+        start_time: "2021-05-30 14:32:00 UTC",
+        diners: 4,
+        state: 0
+      ),
+      Book.create!(
+        email: "email3@hotmail.com",
+        start_time: "2022-04-22 14:32:00 UTC",
+        diners: 2,
+        state: 1
+      ),
+      Book.create!(
+        email: "email4@gmail.com",
+        start_time: "2022-05-30 14:32:00 UTC",
+        diners: 3,
+        state: 3,
+        charge: Money.new(500, "EUR")
+      )
+    ])
     assign(:books, [
       Book.create!(
         email: "email1@hotmail.com",
@@ -72,13 +99,13 @@ end
 
 RSpec.describe "books/index", type: :view do
   before(:each) do
-    assign(:books, [])
+    assign(:books_all, [])
   end
 
   it "renders no books" do
     render
     assert_select "h1", text: "Reservas".to_s
     assert_select "table", count: 0
-    assert_select "div", text: "¡No hay reservas!".to_s, count: 1
+    assert_select "p", text: "¡No hay reservas!".to_s, count: 1
   end
 end
