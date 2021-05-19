@@ -25,7 +25,7 @@ class RestaurantController < ApplicationController
 
     url = request.base_url + "/books/mybooks?token=" + @check.token
 
-    BookMailer.with(email: book_params[:email], url: url).mybooks.deliver_now
+    BookMailer.with(email: book_params[:email], url: url).mybooks.deliver_later
 
     msg = "¡Correo con enlace enviado a " + book_params[:email] + "! El enlace es válido durante los próximos 30 minutos"
 
@@ -57,8 +57,8 @@ class RestaurantController < ApplicationController
       else
         @book = Book.new(book_params)
         if @book.save
-          BookMailer.with(book: @book).book_pending_customer.deliver_now
-          BookMailer.with(book: @book).book_pending_admin.deliver_now
+          BookMailer.with(book: @book).book_pending_customer.deliver_later
+          BookMailer.with(book: @book).book_pending_admin.deliver_later
           format.html { redirect_to @book, notice: "Reserva realizada." }
           format.json { render 'books/show', status: :created, location: @book }
         else

@@ -55,8 +55,8 @@ class BooksController < ApplicationController
 
     if @book.save
 
-      BookMailer.with(book: @book).book_pending_customer.deliver_now
-      BookMailer.with(book: @book).book_pending_admin.deliver_now
+      BookMailer.with(book: @book).book_pending_customer.deliver_later
+      BookMailer.with(book: @book).book_pending_admin.deliver_later
 
       customer = Stripe::Customer.create(
         :email => params[:stripeEmail],
@@ -150,7 +150,7 @@ class BooksController < ApplicationController
   # PATCH/PUT /books/1 or /books/1.json
   def update
     if book_params[:state] === "confirmed" && @book.state === "pending"
-      BookMailer.with(book: @book).book_confirmation.deliver_now
+      BookMailer.with(book: @book).book_confirmation.deliver_later
     end
     respond_to do |format|
       if @book.update(book_params)

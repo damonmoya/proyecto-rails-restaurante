@@ -138,7 +138,8 @@ div.number-field {
 }
 
 .table {
-  text-align: center;
+  table-layout: fixed;
+  word-wrap: break-word;
 }
 
 th > a {

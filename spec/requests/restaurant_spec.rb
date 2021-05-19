@@ -23,10 +23,20 @@ RSpec.describe "Restaurants", type: :request do
 
   describe "POST /index" do
     context "with valid parameters" do
+
+      after do
+        clear_enqueued_jobs
+      end 
+
       it "creates a new Book" do
         expect {
           post restaurant_index_url, params: valid_attributes
         }.to change(Book, :count).by(1)
+        expect(enqueued_jobs.size).to eq(2)
+        assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[0][:args][0], "BookMailer"
+        assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[0][:args][1], "book_pending_customer"
+        assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[1][:args][0], "BookMailer"
+        assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[1][:args][1], "book_pending_admin"
       end
 
       it "redirects to the created book" do
@@ -83,24 +93,30 @@ RSpec.describe "Restaurants", type: :request do
 
   describe "POST /mybooks" do
 
+    after do
+      clear_enqueued_jobs
+    end 
+
     it "does not found any books" do
       post restaurant_mybooks_url, params: { email: "prueba@gmail.com" }
       expect(response).to redirect_to(restaurant_index_path)
-      expect(ActionMailer::Base.deliveries.count).to eq(0)
+      expect(enqueued_jobs.size).to eq(0)
     end
 
     it "invalid captcha" do
       book = Book.create! valid_attributes
       post restaurant_mybooks_url, params: { email: "prueba@gmail.com", "g-recaptcha-response": "" }
       expect(response).to redirect_to(restaurant_index_path)
-      expect(ActionMailer::Base.deliveries.count).to eq(0)
+      expect(enqueued_jobs.size).to eq(0)
     end
 
     it "sends email" do
       book = Book.create! valid_attributes
       post restaurant_mybooks_url, params: { email: book.email }
       expect(response).to redirect_to(restaurant_index_path)
-      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      expect(enqueued_jobs.size).to eq(1)
+      assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[0][:args][0], "BookMailer"
+        assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[0][:args][1], "mybooks"
     end
 
   end

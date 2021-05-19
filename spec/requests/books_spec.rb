@@ -184,6 +184,10 @@ RSpec.describe "/books", type: :request do
 
   describe "POST /checkout" do
 
+    after :each do
+      clear_enqueued_jobs
+    end 
+
     it "creates new book" do
       book1 = Book.create! valid_topay_attributes
       expect {
@@ -197,7 +201,11 @@ RSpec.describe "/books", type: :request do
           start_time_5i: "32" 
         }
       }.to change(Book, :count).by(1)
-      expect(ActionMailer::Base.deliveries.count).to eq(2)
+      expect(enqueued_jobs.size).to eq(2)
+      assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[0][:args][0], "BookMailer"
+      assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[0][:args][1], "book_pending_customer"
+      assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[1][:args][0], "BookMailer"
+      assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[1][:args][1], "book_pending_admin"
       #expect(response).to be_successful
     end
 
@@ -234,6 +242,10 @@ RSpec.describe "/books", type: :request do
       sign_in admin 
     end
 
+    after :each do
+      clear_enqueued_jobs
+    end 
+
     context "with valid parameters" do
       let(:new_attributes) {
         {email: "prueba2@gmail.com", start_time: "2021-07-30 14:32:00 UTC", diners: 2, state: "confirmed"}
@@ -244,7 +256,9 @@ RSpec.describe "/books", type: :request do
         patch book_url(book), params: { book: new_attributes }
         book.reload
         expect(response).to redirect_to(book_url(book))
-        expect(ActionMailer::Base.deliveries.count).to eq(1)
+        expect(enqueued_jobs.size).to eq(1)
+        assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[0][:args][0], "BookMailer"
+        assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[0][:args][1], "book_confirmation"
       end
 
       it "redirects to the book" do
@@ -269,6 +283,10 @@ RSpec.describe "/books", type: :request do
     before :each do
       sign_in admin 
     end
+
+    after :each do
+      clear_enqueued_jobs
+    end 
     
     it "destroys the requested book" do
       book = Book.create! valid_attributes
@@ -286,6 +304,10 @@ RSpec.describe "/books", type: :request do
   end
 
   describe "get /cancel" do
+
+    after :each do
+      clear_enqueued_jobs
+    end 
     
     it "destroys the requested book" do
       book = Book.create! valid_attributes
