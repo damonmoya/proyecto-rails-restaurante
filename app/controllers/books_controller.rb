@@ -58,6 +58,11 @@ class BooksController < ApplicationController
       BookMailer.with(book: @book).book_pending_customer.deliver_later
       BookMailer.with(book: @book).book_pending_admin.deliver_later
 
+      respond_to do |format|
+        format.html { redirect_to root_url, notice: "Reserva pagada." }
+        format.json { render :action => 'index', :controller => 'restaurant' }
+      end
+
       customer = Stripe::Customer.create(
         :email => params[:stripeEmail],
         :source => params[:stripeToken]
@@ -69,11 +74,6 @@ class BooksController < ApplicationController
         :description => 'Book charge',
         :currency => 'eur'
       )
-
-      respond_to do |format|
-        format.html { redirect_to books_url, notice: "Reserva pagada." }
-        format.json { render :index, location: books_path }
-      end
 
     end
 

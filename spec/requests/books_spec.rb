@@ -206,7 +206,7 @@ RSpec.describe "/books", type: :request do
       assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[0][:args][1], "book_pending_customer"
       assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[1][:args][0], "BookMailer"
       assert_equal ActiveJob::Base.queue_adapter.enqueued_jobs[1][:args][1], "book_pending_admin"
-      #expect(response).to be_successful
+      expect(response).to redirect_to(root_path)
     end
 
     it "invalid captcha" do
