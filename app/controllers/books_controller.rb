@@ -135,8 +135,8 @@ class BooksController < ApplicationController
       else
         @book = Book.new(book_params)
         if @book.save
-          BookMailer.with(book: @book).book_pending_customer.deliver_now
-          BookMailer.with(book: @book).book_pending_admin.deliver_now
+          BookMailer.with(book: @book).book_pending_customer.deliver_later
+          BookMailer.with(book: @book).book_pending_admin.deliver_later
           format.html { redirect_to @book, notice: "Reserva realizada." }
           format.json { render :show, status: :created, location: @book }
         else

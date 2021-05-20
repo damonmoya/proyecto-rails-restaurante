@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2021_05_13_084113) do
     t.datetime "start_time"
     t.integer "diners"
     t.integer "state", default: 0
+    t.integer "reminder_sent", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "optional_charge_cents"
