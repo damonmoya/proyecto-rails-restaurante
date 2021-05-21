@@ -8,5 +8,5 @@
 
 require 'factory_bot_rails'
 
-FactoryBot.create_list(:book, 100)
+FactoryBot.create_list(:book, 1000)
 FactoryBot.create(:admin)
