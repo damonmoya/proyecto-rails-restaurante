@@ -1,1 +1,0 @@
-clock: bundle exec rails runner bin/clock
