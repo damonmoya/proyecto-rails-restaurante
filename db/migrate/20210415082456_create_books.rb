@@ -5,7 +5,6 @@ class CreateBooks < ActiveRecord::Migration[6.0]
       t.datetime :start_time
       t.integer :diners
       t.integer :state, default: 0
-      t.integer :reminder_sent, default: 0
 
       t.timestamps
     end
