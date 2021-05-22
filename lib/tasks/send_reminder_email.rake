@@ -7,13 +7,13 @@ namespace :emails do
         # between_time2 = 2*(60*60*24)
         Book.all.each do |book|
             if ((book.start_time.to_i - DateTime.now.utc.to_i)) <= between_time1 && book.state == "confirmed" && book.reminder_sent == 0
-                # book.reminder_sent = 1
-                # book.save
+                book.reminder_sent = 1
+                book.save
                 BookMailer.with(book: book).reminder_book.deliver_now
-                count = count + 1
+                # count = count + 1
             end
         end
-        msg = "Correos de recordatorio enviados: " + count.to_s
-        puts msg
+        # msg = "Correos de recordatorio enviados: " + count.to_s
+        # puts msg
     end
 end

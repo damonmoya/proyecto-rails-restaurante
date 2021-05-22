@@ -1,3 +1,3 @@
-schedule.every('20m') do
+schedule.every('5m') do
   `rake emails:send_reminder`
 end
