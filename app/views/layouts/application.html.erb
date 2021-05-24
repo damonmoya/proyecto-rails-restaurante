@@ -41,9 +41,13 @@
                 <li class="nav-item">
                   <%= link_to "Salir", destroy_admin_session_path, method: :delete, class: "btn btn-danger" %>
                 </li>
-              <% else %>
+              <%
+=begin%>
+ <% else %>
                 <li class="nav-item">
-                  <%= link_to "Ingresar como admin", new_admin_session_path, class: "btn btn-primary" %>
+                  <%= link_to "Ingresar como admin", new_admin_session_path, class: "btn btn-primary" %> 
+<%
+=end%>
               <% end %>
             </ul>
           </div>
