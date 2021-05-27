@@ -63,6 +63,15 @@ RSpec.describe "/books", type: :request do
     end
   end
 
+  describe "GET /index (not admin)" do
+
+    it "redirects to root" do
+      get books_url
+      expect(response).to redirect_to(root_path)
+    end
+
+  end
+
   describe "GET /mybooks" do
     it "renders a successful response" do
       check = Check.create! valid_check_attributes
@@ -106,6 +115,16 @@ RSpec.describe "/books", type: :request do
       get edit_book_url(book)
       expect(response).to be_successful
     end
+  end
+
+  describe "GET /edit (not admin)" do
+
+    it "redirects to root" do
+      book = Book.create! valid_attributes
+      get edit_book_url(book)
+      expect(response).to redirect_to(root_path)
+    end
+
   end
 
   describe "POST /create" do
@@ -238,18 +257,19 @@ RSpec.describe "/books", type: :request do
 
   describe "PATCH /update" do
 
-    before :each do
-      sign_in admin 
-    end
-
     after :each do
       clear_enqueued_jobs
     end 
 
+    let(:new_attributes) {
+      {email: "prueba2@gmail.com", start_time: "2021-07-30 14:32:00 UTC", diners: 2, state: "confirmed"}
+    }
+
     context "with valid parameters" do
-      let(:new_attributes) {
-        {email: "prueba2@gmail.com", start_time: "2021-07-30 14:32:00 UTC", diners: 2, state: "confirmed"}
-      }
+
+      before :each do
+        sign_in admin 
+      end
 
       it "updates the requested book" do
         book = Book.create! valid_attributes
@@ -270,6 +290,11 @@ RSpec.describe "/books", type: :request do
     end
 
     context "with invalid parameters" do
+
+      before :each do
+        sign_in admin 
+      end
+
       it "renders a successful response (i.e. to display the 'edit' template)" do
         book = Book.create! valid_attributes
         patch book_url(book), params: { book: invalid_attributes }
@@ -277,6 +302,16 @@ RSpec.describe "/books", type: :request do
         expect(response).to be_successful
       end
     end
+
+    context "not admin" do
+
+      it "redirects to root" do
+        book = Book.create! valid_attributes
+        patch book_url(book), params: { book: new_attributes }
+        expect(response).to redirect_to(root_url)
+      end
+    end
+
   end
 
   describe "DELETE /destroy" do
@@ -301,6 +336,24 @@ RSpec.describe "/books", type: :request do
       delete book_url(book)
       expect(response).to redirect_to(books_url)
     end
+  end
+
+  describe "DELETE /destroy (not admin)" do
+
+    it "does not destroy the requested book" do
+      book = Book.create! valid_attributes
+      expect {
+        delete book_url(book)
+      }.to change(Book, :count).by(0)
+      expect(ActionMailer::Base.deliveries.count).to eq(0)
+    end
+
+    it "redirects to root" do
+      book = Book.create! valid_attributes
+      delete book_url(book)
+      expect(response).to redirect_to(root_url)
+    end
+
   end
 
   describe "get /cancel" do

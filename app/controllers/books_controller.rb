@@ -227,4 +227,15 @@ class BooksController < ApplicationController
       params[:direction] || "asc"
     end
 
+    def authenticate_admin!
+      if admin_signed_in?
+        super
+      else
+        respond_to do |format|
+          format.html { redirect_to root_url}
+          format.json { head :no_content }
+        end
+      end
+    end
+
 end
